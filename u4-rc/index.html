@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מעבדת RC אינטראקטיבית — הקבל ורשתות LP ו-HP (יחידה U4)</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="engine.js"></script>
+  <script defer src="visuals.js"></script>
+  <script defer src="content.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand" id="brand-home-trigger" role="button" tabindex="0" title="חזרה למסך הראשי">
+        <div class="brand-icon" dir="ltr">RC</div>
+        <div>
+          <h1 class="brand-title">מעבדת <bdi dir="ltr" class="ltr-term">RC</bdi> אינטראקטיבית — הקבל ורשתות <bdi dir="ltr" class="ltr-term">LP</bdi> ו-<bdi dir="ltr" class="ltr-term">HP</bdi></h1>
+          <p class="brand-sub">יחידה <bdi dir="ltr" class="ltr-term">U4</bdi> · אלקטרוניקה תקבילית כיתה י"א · שאלון <bdi dir="ltr" class="ltr-term">815381</bdi></p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="ניווט ראשי">
+        <button class="nav-btn home-nav-btn active" data-tab="home" title="מסך בחירת הפרקים הראשי">🏠 ראשי</button>
+        <button class="nav-btn" data-tab="intro"><span class="nav-num" dir="ltr">1</span> 📚 מבוא ואינטואיציה</button>
+        <button class="nav-btn" data-tab="lab"><span class="nav-num" dir="ltr">2</span> 🔬 מעבדת חקר וסימולציה</button>
+        <button class="nav-btn" data-tab="workshop"><span class="nav-num" dir="ltr">3</span> ✍️ סדנת תרגול ואימות</button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="btn-open-formulas" class="btn">📄 דף נוסחאות ומחשבונים</button>
+        <button id="btn-toggle-theme" class="btn" title="החלף בין מצב כיתה בהיר למצב כהה">🌙 מצב כהה</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- ================================================================
+         TAB 0: HOME / 3 PRIMARY ENTRY BUTTONS LAUNCH HUB
+         ================================================================ -->
+    <section id="tab-home" class="tab-panel active">
+      <div class="home-hero">
+        <span class="mod-badge"><span class="led-dot lp"></span>יחידה <bdi dir="ltr" class="ltr-term">U4</bdi> · מערכת למידה וסימולציה</span>
+        <h2>בחרו פרק להתחלה — הקבל ורשתות <bdi dir="ltr" class="ltr-term">LP</bdi> ו-<bdi dir="ltr" class="ltr-term">HP</bdi></h2>
+        <p>לחצו על אחד משלושת החלקים כדי להיכנס אליו. בכל שלב ניתן לעבור בחופשיות בין המבוא, מעבדת החקר וסדנת התרגול דרך הסרגל העליון.</p>
+      </div>
+
+      <div class="home-cards-grid">
+        <!-- Primary Button 1: Intro -->
+        <div class="home-card card-intro" data-launch-tab="intro" role="button" tabindex="0">
+          <div class="home-card-top">
+            <span class="home-step-pill" dir="ltr">01 · INTRO</span>
+            <span id="home-intro-badge" class="badge badge-lp">4 תחנות לימוד</span>
+          </div>
+          <div class="home-preview-box">
+            <svg class="home-preview-svg" viewBox="0 0 260 76" aria-hidden="true">
+              <line x1="12" y1="62" x2="248" y2="62" stroke="var(--border-strong)" stroke-width="1"/>
+              <line x1="12" y1="14" x2="248" y2="14" stroke="var(--border)" stroke-dasharray="3 3" stroke-width="1"/>
+              <path d="M18 62 C52 62, 68 18, 240 15" fill="none" stroke="var(--lp-color)" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M18 15 C52 15, 68 59, 240 62" fill="none" stroke="var(--hp-color)" stroke-width="2.4" stroke-linecap="round"/>
+              <text x="195" y="29" fill="var(--lp-color)" font-size="11" font-family="var(--font-mono)" font-weight="700" direction="ltr">VC</text>
+              <text x="195" y="55" fill="var(--hp-color)" font-size="11" font-family="var(--font-mono)" font-weight="700" direction="ltr">VR</text>
+              <text x="20" y="26" fill="var(--muted)" font-size="10.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">E = VR + VC</text>
+            </svg>
+          </div>
+          <h3>📚 מבוא ואינטואיציה</h3>
+          <p>איך קבל נטען ונפרק לפי חוק קירכהוף, ההבדל בין רשת <bdi dir="ltr" class="ltr-term">LP</bdi> לרשת <bdi dir="ltr" class="ltr-term">HP</bdi>, משמעות <bdi dir="ltr" class="ltr-inline">τ = R·C</bdi> ו-5 מלכודות בגרות.</p>
+          <div class="home-chips">
+            <button type="button" class="home-chip" data-home-intro="ch1">תחנה 1: קירכהוף</button>
+            <button type="button" class="home-chip" data-home-intro="ch2">תחנה 2: <bdi dir="ltr" class="ltr-term">LP</bdi> מול <bdi dir="ltr" class="ltr-term">HP</bdi></button>
+            <button type="button" class="home-chip" data-home-intro="ch3">תחנה 3: קבוע הזמן <bdi dir="ltr" class="ltr-term">τ</bdi></button>
+            <button type="button" class="home-chip" data-home-intro="ch4">תחנה 4: סדר פתרון</button>
+          </div>
+          <span class="home-cta-btn">כניסה למבוא ואינטואיציה ←</span>
+        </div>
+
+        <!-- Primary Button 2: Interactive Lab -->
+        <div class="home-card card-lab" data-launch-tab="lab" role="button" tabindex="0">
+          <div class="home-card-top">
+            <span class="home-step-pill" dir="ltr">02 · LIVE LAB</span>
+            <span class="badge badge-accent" dir="ltr">AWG + DSO</span>
+          </div>
+          <div class="home-preview-box">
+            <svg class="home-preview-svg" viewBox="0 0 260 76" aria-hidden="true">
+              <line x1="12" y1="62" x2="248" y2="62" stroke="var(--border-strong)" stroke-width="1"/>
+              <path d="M14 54 H58 V16 H146 V54 H246" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M14 54 H58 C84 54, 102 22, 146 20 C174 20, 194 50, 246 54" fill="none" stroke="var(--lp-color)" stroke-width="2.5" stroke-linecap="round"/>
+              <text x="18" y="20" fill="var(--accent)" font-size="10.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">Vi(t)</text>
+              <text x="190" y="26" fill="var(--lp-color)" font-size="10.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">Vo(t)</text>
+            </svg>
+          </div>
+          <h3>🔬 מעבדת חקר וסימולציה</h3>
+          <p>אוסילוסקופ חי דו-ערוצי, בניית פולס פשוט או רב-שלבי מורכב, שליטה במתחים לפני/במהלך/אחרי ומדידת זרם ומתחים בכל רגע.</p>
+          <div class="home-chips">
+            <button type="button" class="home-chip" data-home-lab="lp-pulse">דופק ב-<bdi dir="ltr" class="ltr-term">LP</bdi></button>
+            <button type="button" class="home-chip" data-home-lab="hp-pulse">דופק ב-<bdi dir="ltr" class="ltr-term">HP</bdi></button>
+            <button type="button" class="home-chip" data-home-lab="complex">בונה פולס רב-שלבי</button>
+          </div>
+          <span class="home-cta-btn">כניסה למעבדת החקר ←</span>
+        </div>
+
+        <!-- Primary Button 3: Exercise Workshop -->
+        <div class="home-card card-workshop" data-launch-tab="workshop" role="button" tabindex="0">
+          <div class="home-card-top">
+            <span class="home-step-pill" dir="ltr">03 · WORKSHOP</span>
+            <span id="home-solved-badge" class="badge badge-done">פתרת 0/12</span>
+          </div>
+          <div class="home-preview-box">
+            <svg class="home-preview-svg" viewBox="0 0 260 76" aria-hidden="true">
+              <line x1="12" y1="62" x2="248" y2="62" stroke="var(--border-strong)" stroke-width="1"/>
+              <path d="M18 62 C56 58, 92 24, 152 20 L242 20" fill="none" stroke="var(--lp-color)" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="112" y1="14" x2="112" y2="62" stroke="var(--warn)" stroke-dasharray="3 3" stroke-width="1.3"/>
+              <circle cx="112" cy="27" r="4.5" fill="var(--warn)"/>
+              <text x="150" y="50" fill="var(--warn)" font-size="11" font-family="var(--font-mono)" font-weight="700" direction="ltr">τ = R·C ✓</text>
+            </svg>
+          </div>
+          <h3>✍️ סדנת תרגול ואימות</h3>
+          <p>אימון אמריקאי בשלבים לחישוב <bdi dir="ltr" class="ltr-term">τ</bdi> והמרת יחידות, 12 תרגילי כיתה ובגרות, מחולל שאלות אקראי ובודק תשובות עם סימולציה.</p>
+          <div class="home-chips">
+            <button type="button" class="home-chip" data-home-workshop="mcdril">🎯 אימון שלבים ו-<bdi dir="ltr" class="ltr-term">τ</bdi></button>
+            <button type="button" class="home-chip" data-home-workshop="curated">📋 12 תרגילי בגרות</button>
+            <button type="button" class="home-chip" data-home-workshop="random">🎲 מחולל אקראי</button>
+            <button type="button" class="home-chip" data-home-workshop="custom">🔍 בודק שיעורי בית</button>
+          </div>
+          <span class="home-cta-btn">כניסה לסדנת התרגול ←</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TAB 1: INTRODUCTION & INTUITION
+         ================================================================ -->
+    <section id="tab-intro" class="tab-panel">
+      <div class="journey-shell">
+        <div class="journey-header">
+          <div class="journey-title-group">
+            <span class="journey-kicker">מסלול לימוד מובנה · 4 תחנות חובה לפי הסדר</span>
+            <span class="journey-sub">כל תחנה היא נושא נפרד שבונה את ההבנה לתחנה הבאה — מומלץ לעבור על כולן (<bdi dir="ltr" class="ltr-term">1 → 2 → 3 → 4</bdi>)</span>
+          </div>
+          <div class="journey-progress-box">
+            <span id="intro-journey-count" class="badge badge-accent">עברת על 1 מתוך 4 נושאים</span>
+            <div class="journey-seg-bar" id="intro-journey-segs" aria-hidden="true">
+              <span class="j-seg active"></span>
+              <span class="j-seg"></span>
+              <span class="j-seg"></span>
+              <span class="j-seg"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-track" id="intro-chapter-nav" role="tablist" aria-label="תחנות פרק המבוא">
+          <button type="button" class="journey-step-card active" data-chapter="ch1">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 1</span>
+              <span class="j-step-status" data-status-for="ch1">● בצפייה כעת</span>
+            </div>
+            <div class="j-step-title">איך קבל נטען ונפרק?</div>
+            <div class="j-step-formula" dir="ltr">KVL: E = VR + VC</div>
+            <div class="j-step-bridge">מוביל לתחנה 2: איפה מודדים מוצא?</div>
+          </button>
+
+          <div class="journey-arrow" data-arrow-after="ch1" aria-hidden="true">←</div>
+
+          <button type="button" class="journey-step-card" data-chapter="ch2">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 2</span>
+              <span class="j-step-status" data-status-for="ch2">○ ממתין למעבר</span>
+            </div>
+            <div class="j-step-title">שתי רשתות מאותו מעגל</div>
+            <div class="j-step-formula" dir="ltr">LP (VC) vs HP (VR)</div>
+            <div class="j-step-bridge">מוביל לתחנה 3: מה קובע את הקצב?</div>
+          </button>
+
+          <div class="journey-arrow" data-arrow-after="ch2" aria-hidden="true">←</div>
+
+          <button type="button" class="journey-step-card" data-chapter="ch3">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 3</span>
+              <span class="j-step-status" data-status-for="ch3">○ ממתין למעבר</span>
+            </div>
+            <div class="j-step-title">קבוע הזמן ורוחב הדופק</div>
+            <div class="j-step-formula" dir="ltr">τ = R · C , 5τ</div>
+            <div class="j-step-bridge">מוביל לתחנה 4: איך פותרים בבגרות?</div>
+          </button>
+
+          <div class="journey-arrow" data-arrow-after="ch3" aria-hidden="true">←</div>
+
+          <button type="button" class="journey-step-card" data-chapter="ch4">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 4</span>
+              <span class="j-step-status" data-status-for="ch4">○ ממתין למעבר</span>
+            </div>
+            <div class="j-step-title">סדר הפתרון ו-5 מלכודות</div>
+            <div class="j-step-formula" dir="ltr">6 שלבים מלאים</div>
+            <div class="j-step-bridge">מוביל למעבדת החקר ולתרגול!</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chapter 1: KVL & Charging Stages -->
+      <div id="intro-ch1" class="intro-chapter">
+        <div class="card">
+          <div class="card-title">
+            <span>חוק קירכהוף בטעינה ובפריקה: מתח המקור מתחלק בכל רגע</span>
+            <span class="badge badge-accent">מפגש 16</span>
+          </div>
+          <p class="section-lead">
+            לחצו על השלבים השונים כדי לראות איך המטען נצבר על לוחות הקבל, למה הזרם מתחיל חזק ונחלש, ואיך סכום המתחים בחוג נשמר תמיד <bdi dir="ltr" class="ltr-inline">E = VR + VC</bdi>.
+          </p>
+
+          <div class="segmented" id="kvl-stage-btns" style="margin-bottom: 1rem;">
+            <button class="seg-btn active" data-stage="before">לפני הסגירה</button>
+            <button class="seg-btn" data-stage="t0">ברגע הסגירה (<bdi dir="ltr" class="ltr-term">t = 0⁺</bdi>): קצר</button>
+            <button class="seg-btn" data-stage="tau1">אחרי <bdi dir="ltr" class="ltr-term">τ</bdi> אחד (<bdi dir="ltr" class="ltr-term">63.2%</bdi>)</button>
+            <button class="seg-btn" data-stage="tau2">אחרי <bdi dir="ltr" class="ltr-term">2τ</bdi> (<bdi dir="ltr" class="ltr-term">86.5%</bdi>)</button>
+            <button class="seg-btn" data-stage="tau5">אחרי <bdi dir="ltr" class="ltr-term">5τ</bdi>: נתק</button>
+            <button class="seg-btn" data-stage="discharge">פריקה (<bdi dir="ltr" class="ltr-term">0 = VR + VC</bdi>)</button>
+          </div>
+
+          <div class="two-col-eq">
+            <div>
+              <div class="canvas-wrap">
+                <canvas id="intro-kvl-canvas" data-height="230"></canvas>
+              </div>
+              <div class="kvl-meter">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
+                  <strong>מאזן קירכהוף בחוג (<bdi dir="ltr" class="ltr-inline" id="kvl-eq-text">12V = 12.00V + 0.00V</bdi>)</strong>
+                  <span id="kvl-current-badge" class="badge badge-accent" dir="ltr">I = 1.20 mA</span>
+                </div>
+                <div class="kvl-bar-track">
+                  <div id="kvl-bar-vc" class="kvl-bar-vc" style="width: 0%;"></div>
+                  <div id="kvl-bar-vr" class="kvl-bar-vr" style="width: 100%;"></div>
+                </div>
+                <div class="kvl-legend">
+                  <span><span style="color:var(--lp-color);">■</span> על הקבל: <bdi dir="ltr" class="ltr-inline" id="kvl-vc-lbl">VC = 0.00 V</bdi></span>
+                  <span><span style="color:var(--hp-color);">■</span> על הנגד: <bdi dir="ltr" class="ltr-inline" id="kvl-vr-lbl">VR = 12.00 V</bdi></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="background: var(--card-soft);">
+              <div class="module-head">
+                <h3 id="kvl-stage-title"></h3>
+                <span class="mod-badge"><span class="led-dot"></span>KVL LIVE</span>
+              </div>
+              <p id="kvl-stage-body"></p>
+              <div id="kvl-quick-metrics" class="kvl-quick-metrics"></div>
+              <div class="math-block" id="kvl-stage-math" dir="ltr"></div>
+              <div style="margin-top: 0.9rem;">
+                <button id="btn-demo-kvl-lab" class="btn btn-primary btn-sm">🔬 פתח מעגל זה במעבדה המלאה</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter 2: LP vs HP -->
+      <div id="intro-ch2" class="intro-chapter" style="display:none;">
+        <div class="compare-cards">
+          <div class="card" style="border-top: 4px solid var(--lp-color);">
+            <div class="card-title">
+              <span>רשת <bdi dir="ltr" class="ltr-term">LP</bdi> — מעביר נמוכים</span>
+              <span class="badge badge-lp" dir="ltr">Vo = VC</span>
+            </div>
+            <div class="canvas-wrap" style="margin-bottom:0.8rem;">
+              <canvas id="intro-lp-schematic" data-height="155"></canvas>
+            </div>
+            <p>הנגד בטור והקבל על המוצא. בגלל שהמתח על הקבל <bdi dir="ltr" class="ltr-inline">VC</bdi> תלוי במטען שנצבר עליו, <strong>המוצא של <bdi dir="ltr" class="ltr-term">LP</bdi> לעולם אינו קופץ בבת אחת</strong> — הוא רודף אחרי מתח המבוא בצורה מעוגלת וחלקה בקצב <bdi dir="ltr" class="ltr-inline">τ = R·C</bdi>.</p>
+            <div class="spec-grid">
+              <div class="spec-tile">
+                <span class="spec-tag">⚡ ברגע קפיצה <bdi dir="ltr" class="ltr-inline">t₀⁺</bdi></span>
+                <div class="spec-val">רציפות על הקבל:<br><bdi dir="ltr" class="ltr-inline">Vo(t₀⁺) = Vo(t₀⁻)</bdi></div>
+              </div>
+              <div class="spec-tile">
+                <span class="spec-tag">⏳ במצב מתמיד (<bdi dir="ltr" class="ltr-inline">≥ 5τ</bdi>)</span>
+                <div class="spec-val">הקבל נטען עד הסוף כנתק ← <bdi dir="ltr" class="ltr-inline">Vo = Vi</bdi></div>
+              </div>
+              <div class="spec-tile">
+                <span class="spec-tag">📐 קצב התגובה</span>
+                <div class="spec-val">טעינה ופריקה מעריכית עם <bdi dir="ltr" class="ltr-inline">τ = R·C</bdi></div>
+              </div>
+              <div class="spec-tile">
+                <span class="spec-tag">📉 אופי המוצא</span>
+                <div class="spec-val">מעוגל ומחליק — מסנן קפיצות חדות</div>
+              </div>
+            </div>
+            <button class="btn btn-lp btn-sm" data-launch-preset="pulse-lp">הדגם דופק ב-<bdi dir="ltr" class="ltr-term">LP</bdi> במעבדה</button>
+          </div>
+
+          <div class="card" style="border-top: 4px solid var(--hp-color);">
+            <div class="card-title">
+              <span>רשת <bdi dir="ltr" class="ltr-term">HP</bdi> — מעביר גבוהים</span>
+              <span class="badge badge-hp" dir="ltr">Vo = VR = Vi - VC</span>
+            </div>
+            <div class="canvas-wrap" style="margin-bottom:0.8rem;">
+              <canvas id="intro-hp-schematic" data-height="155"></canvas>
+            </div>
+            <p>הקבל בטור והנגד על המוצא. ברגע שהמבוא קופץ, המתח על הקבל לא מספיק להשתנות — ולכן <strong>כל הקפיצה עוברת מיד אל הנגד!</strong> אחר כך הקבל נטען, והמתח על הנגד דועך חזרה אל <bdi dir="ltr" class="ltr-inline">0 V</bdi>.</p>
+            <div class="spec-grid">
+              <div class="spec-tile">
+                <span class="spec-tag">⚡ ברגע קפיצה <bdi dir="ltr" class="ltr-inline">t₀⁺</bdi></span>
+                <div class="spec-val">כל הקפיצה במוצא:<br><bdi dir="ltr" class="ltr-inline">Vo(t₀⁺) = Vo(t₀⁻) + ΔVi</bdi></div>
+              </div>
+              <div class="spec-tile">
+                <span class="spec-tag">⏳ במצב מתמיד (<bdi dir="ltr" class="ltr-inline">≥ 5τ</bdi>)</span>
+                <div class="spec-val">הקבל נתק ואין זרם ← <bdi dir="ltr" class="ltr-inline">Vo = 0 V</bdi></div>
+              </div>
+              <div class="spec-tile">
+                <span class="spec-tag">🔻 מתח שלילי בסוף דופק</span>
+                <div class="spec-val">ירידה <bdi dir="ltr" class="ltr-inline">ΔVi &lt; 0</bdi> מורידה מתחת ל-<bdi dir="ltr" class="ltr-inline">0 V</bdi></div>
+              </div>
+              <div class="spec-tile">
+                <span class="spec-tag">🔍 בדיקת שימור</span>
+                <div class="spec-val">בכל רגע: <bdi dir="ltr" class="ltr-inline">VC + Vo = Vi</bdi></div>
+              </div>
+            </div>
+            <button class="btn btn-hp btn-sm" data-launch-preset="pulse-hp">הדגם דופק ב-<bdi dir="ltr" class="ltr-term">HP</bdi> במעבדה</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1rem;">
+          <div class="card-title">
+            <span>זהות הזהב לבדיקה עצמית בכל רגע</span>
+            <button class="btn btn-primary btn-sm" data-launch-preset="compare-both">🔬 השווה <bdi dir="ltr" class="ltr-term">LP + HP</bdi> יחד במעבדה</button>
+          </div>
+          <p>בגלל ששתי הרשתות הן בדיוק אותו מעגל טעינה (פעם מודדים על הקבל ופעם על הנגד), מתקיים חוק קירכהוף בכל רגע נתון:</p>
+          <div class="math-block" dir="ltr">Vo(LP) + Vo(HP) = VC + VR = Vi(t)   ⇒   Vo(HP) = Vi(t) - Vo(LP)</div>
+        </div>
+      </div>
+
+      <!-- Chapter 3: T vs tau -->
+      <div id="intro-ch3" class="intro-chapter" style="display:none;">
+        <div class="card">
+          <div class="card-title">
+            <span>מה קובע את צורת המוצא? היחס בין משך הדופק (<bdi dir="ltr" class="ltr-term">T</bdi>) לקבוע הזמן (<bdi dir="ltr" class="ltr-term">τ</bdi>)</span>
+          </div>
+          <p class="section-lead">בחרו יחס זמנים וראו כיצד אותו גל ריבועי מתעצב ברשת <bdi dir="ltr" class="ltr-term">LP</bdi> לעומת רשת <bdi dir="ltr" class="ltr-term">HP</bdi>.</p>
+          <div class="segmented" id="tau-regime-btns" style="margin-bottom: 1rem;">
+            <button class="seg-btn active" data-regime="long">דופק ארוך (<bdi dir="ltr" class="ltr-term">T ≫ τ</bdi>)</button>
+            <button class="seg-btn" data-regime="med">זמן בינוני (<bdi dir="ltr" class="ltr-term">T ≈ τ</bdi>)</button>
+            <button class="seg-btn" data-regime="short">גל מהיר (<bdi dir="ltr" class="ltr-term">T ≪ τ</bdi>)</button>
+          </div>
+          <div class="two-col-eq">
+            <div class="canvas-wrap">
+              <canvas id="intro-tau-canvas" data-height="250"></canvas>
+            </div>
+            <div class="card" style="background: var(--card-soft);">
+              <h3 id="tau-regime-title" style="margin-top:0;"></h3>
+              <p id="tau-regime-lp"></p>
+              <p id="tau-regime-hp"></p>
+              <button class="btn btn-primary btn-sm" id="btn-launch-square-regime">🔬 נסה בעצמך במעבדה</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter 4: 6-step Bagrut Roadmap & Pitfalls -->
+      <div id="intro-ch4" class="intro-chapter" style="display:none;">
+        <div class="card" style="margin-bottom: 1rem;">
+          <div class="card-title"><span>סדר הפתרון המנצח לשאלת בגרות ב-<bdi dir="ltr" class="ltr-term">RC</bdi> (6 שלבים)</span></div>
+          <div class="roadmap-steps">
+            <div class="roadmap-step"><span class="roadmap-num">1</span><strong>מזהים רשת:</strong> מוצא על הקבל ← <bdi dir="ltr" class="ltr-term">LP</bdi>. מוצא על הנגד ← <bdi dir="ltr" class="ltr-term">HP</bdi>.</div>
+            <div class="roadmap-step"><span class="roadmap-num">2</span><strong>מחשבים <bdi dir="ltr" class="ltr-term">τ</bdi>:</strong> <bdi dir="ltr" class="ltr-inline">τ = R · C</bdi> עם יחידות (<bdi dir="ltr" class="ltr-inline">kΩ·µF = ms</bdi>). מפסק שמשנה נגד ← <bdi dir="ltr" class="ltr-term">τ</bdi> חדש!</div>
+            <div class="roadmap-step"><span class="roadmap-num">3</span><strong>מחלקים לקטעים:</strong> קטע חדש בכל שינוי במבוא. <bdi dir="ltr" class="ltr-inline">Δt = t - t₀</bdi> נמדד מתחילת הקטע.</div>
+            <div class="roadmap-step"><span class="roadmap-num">4</span><strong>בכל קטע:</strong> ב-<bdi dir="ltr" class="ltr-term">LP</bdi> מוצאים <bdi dir="ltr" class="ltr-inline">V₀, Vf</bdi>. ב-<bdi dir="ltr" class="ltr-term">HP</bdi> קודם קופצים ב-<bdi dir="ltr" class="ltr-inline">ΔVi</bdi> ואז דועכים אל <bdi dir="ltr" class="ltr-inline">0</bdi>.</div>
+            <div class="roadmap-step"><span class="roadmap-num">5</span><strong>מציבים ומחשבים:</strong> מתח ← נוסחת <bdi dir="ltr" class="ltr-inline">e^(-Δt/τ)</bdi>. זמן ('מתי') ← שורת ה-<bdi dir="ltr" class="ltr-term">ln</bdi> + להוסיף <bdi dir="ltr" class="ltr-inline">t₀</bdi>.</div>
+            <div class="roadmap-step"><span class="roadmap-num">6</span><strong>מסרטטים:</strong> המוצא מתחת למבוא בדיוק באותו ציר זמן, עם כל הערכים שחושבו.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>5 הטעויות הנפוצות שעולות בנקודות — ואיך נמנעים מהן</span></div>
+          <div class="pitfall-grid" id="pitfalls-container"></div>
+        </div>
+      </div>
+
+      <div class="intro-flow-footer" id="intro-next-bar">
+        <div class="intro-flow-context">
+          <span id="intro-step-indicator" class="badge badge-accent">תחנה 1 מתוך 4</span>
+          <span id="intro-next-reason" class="intro-next-reason"></span>
+        </div>
+        <div class="intro-flow-actions">
+          <button type="button" class="btn btn-sm" id="btn-intro-prev">→ התחנה הקודמת</button>
+          <button type="button" class="btn btn-primary" id="btn-intro-next">המשך לתחנה 2: רשת LP מול HP ←</button>
+          <button type="button" class="btn btn-sm" data-goto-tab="lab">🔬 למעבדה</button>
+          <button type="button" class="btn btn-sm" data-goto-tab="workshop">✍️ לתרגול</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TAB 2: INTERACTIVE LAB & SYNCHRONIZED OSCILLOSCOPE
+         ================================================================ -->
+    <section id="tab-lab" class="tab-panel">
+      <div class="lab-layout">
+        <!-- Controls Column -->
+        <aside class="controls-stack">
+          <div class="control-group">
+            <div class="module-head">
+              <h3>1. בחירת טופולוגיית הרשת</h3>
+              <span class="mod-badge"><span class="led-dot lp"></span>MOD 01</span>
+            </div>
+            <div class="topo-grid" id="lab-network-seg">
+              <button class="topo-btn active lp" data-net="LP" type="button">
+                <svg class="topo-svg" viewBox="0 0 64 28" aria-hidden="true">
+                  <path d="M4 10 H16 L19 5 L23 15 L27 5 L31 15 L34 10 H52" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="42" y1="10" x2="42" y2="16" stroke="var(--lp-color)" stroke-width="1.8"/>
+                  <line x1="36" y1="16" x2="48" y2="16" stroke="var(--lp-color)" stroke-width="2"/>
+                  <line x1="36" y1="20" x2="48" y2="20" stroke="var(--lp-color)" stroke-width="2"/>
+                  <line x1="42" y1="20" x2="42" y2="26" stroke="var(--lp-color)" stroke-width="1.8"/>
+                  <circle cx="54" cy="10" r="2.2" fill="var(--lp-color)"/>
+                </svg>
+                <span>רשת <bdi dir="ltr" class="ltr-term">LP</bdi> (קבל)</span>
+              </button>
+              <button class="topo-btn hp" data-net="HP" type="button">
+                <svg class="topo-svg" viewBox="0 0 64 28" aria-hidden="true">
+                  <line x1="4" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.8"/>
+                  <line x1="20" y1="4" x2="20" y2="16" stroke="var(--hp-color)" stroke-width="2"/>
+                  <line x1="24" y1="4" x2="24" y2="16" stroke="var(--hp-color)" stroke-width="2"/>
+                  <line x1="24" y1="10" x2="52" y2="10" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M42 10 V14 L46 16 L38 19 L46 22 L38 25 L42 26 V28" fill="none" stroke="var(--hp-color)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="54" cy="10" r="2.2" fill="var(--hp-color)"/>
+                </svg>
+                <span>רשת <bdi dir="ltr" class="ltr-term">HP</bdi> (נגד)</span>
+              </button>
+              <button class="topo-btn" data-net="BOTH" type="button">
+                <svg class="topo-svg" viewBox="0 0 64 28" aria-hidden="true">
+                  <path d="M6 19 C16 19, 20 8, 34 8 L58 8" fill="none" stroke="var(--lp-color)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M6 21 L18 7 C23 16, 30 21, 58 21" fill="none" stroke="var(--hp-color)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>השוואה יחד</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3>2. רכיבי המעגל וקבוע הזמן <bdi dir="ltr" class="ltr-term">τ</bdi></h3>
+            <div class="field-row">
+              <div class="field-label">
+                <span>נגד (<bdi dir="ltr" class="ltr-term">R₁</bdi>)</span>
+                <span id="lab-r1-readout" dir="ltr" class="ltr-inline">10 kΩ</span>
+              </div>
+              <div class="input-combo">
+                <input id="lab-r1-val" class="input-box ltr-input" type="number" step="0.1" min="0.1" value="10">
+                <select id="lab-r1-unit" class="select-box" dir="ltr">
+                  <option value="Ω">Ω</option>
+                  <option value="kΩ" selected>kΩ</option>
+                  <option value="MΩ">MΩ</option>
+                </select>
+              </div>
+              <input id="lab-r1-slider" type="range" min="1" max="100" step="0.5" value="10">
+            </div>
+
+            <div class="field-row">
+              <div class="field-label">
+                <span>קבל (<bdi dir="ltr" class="ltr-term">C</bdi>)</span>
+                <span id="lab-c-readout" dir="ltr" class="ltr-inline">0.1 µF</span>
+              </div>
+              <div class="input-combo">
+                <input id="lab-c-val" class="input-box ltr-input" type="number" step="0.1" min="0.01" value="0.1">
+                <select id="lab-c-unit" class="select-box" dir="ltr">
+                  <option value="nF">nF</option>
+                  <option value="µF" selected>µF</option>
+                  <option value="mF">mF</option>
+                </select>
+              </div>
+              <input id="lab-c-slider" type="range" min="0.05" max="20" step="0.05" value="0.1">
+            </div>
+
+            <div class="tau-readout">
+              <div>
+                <div style="font-size:0.8rem; color:var(--muted);">קבוע זמן <bdi dir="ltr" class="ltr-term">τ = R·C</bdi></div>
+                <strong id="lab-tau-val" dir="ltr" class="ltr-inline" style="font-size:1.05rem;">1 ms</strong>
+              </div>
+              <div>
+                <div style="font-size:0.8rem; color:var(--muted);">מצב מתמיד (<bdi dir="ltr" class="ltr-term">5τ</bdi>)</div>
+                <strong id="lab-5tau-val" dir="ltr" class="ltr-inline" style="font-size:1.05rem;">5 ms</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="module-head">
+              <h3>3. מחולל אות המבוא <bdi dir="ltr" class="ltr-term">Vi(t)</bdi></h3>
+              <span class="mod-badge"><span class="led-dot warn"></span>AWG</span>
+            </div>
+            <div class="field-row">
+              <div class="field-label">
+                <span>סוג אות / תבנית</span>
+                <button id="btn-quick-complex" type="button" class="btn btn-sm" style="padding:0.18rem 0.5rem; font-size:0.75rem;">🎛️ בונה רב-שלבי</button>
+              </div>
+              <select id="lab-preset" class="select-box">
+                <option value="step-up">מדרגה עולה מאפס (0V → Vi)</option>
+                <option value="discharge">פריקה ממצב מתמיד (V0 → 0V)</option>
+                <option value="step-offset">מדרגה מרמה שלילית/קבועה (V1 → V2)</option>
+                <option value="pulse" selected>דופק מלא (לפני / במהלך / אחרי)</option>
+                <option value="complex">בונה פולס מורכב — רב-שלבי (לפני / שלבים / אחרי)</option>
+                <option value="two-step">שתי מדרגות רצופות (3 רמות)</option>
+                <option value="square">גל ריבועי מחזורי (Square Wave)</option>
+                <option value="switch-2025">מפסק משנה-נגד (בסגנון בגרות 2025)</option>
+              </select>
+            </div>
+            <div id="lab-signal-fields"></div>
+          </div>
+        </aside>
+
+        <!-- Stage Column -->
+        <div class="lab-stage">
+          <!-- Circuit + KVL Live Bar -->
+          <div class="card" style="padding:0.9rem;">
+            <div class="card-title" style="margin-bottom:0.45rem;">
+              <span>המעגל החשמלי וזרימת המטען בזמן אמת</span>
+              <span id="lab-state-pill" class="badge badge-accent">מצב המעגל</span>
+            </div>
+            <div class="canvas-wrap">
+              <canvas id="lab-circuit-canvas" data-height="220"></canvas>
+            </div>
+            <div class="kvl-meter" style="margin-top:0.65rem;">
+              <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.4rem;">
+                <span>בדיקת קירכהוף בכל רגע: <bdi dir="ltr" class="ltr-inline" id="lab-kvl-eq">Vi = VR + VC</bdi></span>
+                <span id="lab-kvl-sum-check" class="badge badge-done" dir="ltr">VC + VR = Vi ✓</span>
+              </div>
+              <div class="kvl-bar-track">
+                <div id="lab-bar-vc" class="kvl-bar-vc" style="width:50%;"></div>
+                <div id="lab-bar-vr" class="kvl-bar-vr" style="width:50%;"></div>
+              </div>
+              <div class="kvl-legend">
+                <span><span style="color:var(--lp-color);">■</span> על הקבל: <bdi dir="ltr" class="ltr-inline" id="lab-kvl-vc-lbl">VC = 0.00 V</bdi></span>
+                <span><span style="color:var(--hp-color);">■</span> על הנגד: <bdi dir="ltr" class="ltr-inline" id="lab-kvl-vr-lbl">VR = 0.00 V</bdi></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual Synchronized Oscilloscope -->
+          <div class="card" style="padding:0; overflow:hidden;">
+            <div class="scope-toolbar">
+              <div class="toolbar-group">
+                <button id="btn-lab-play" class="btn btn-primary btn-sm">▶ הפעל אנימציה</button>
+                <button id="btn-lab-reset" class="btn btn-sm">↺ אפס</button>
+                <select id="lab-speed" class="select-box" dir="ltr" style="padding:0.32rem 0.45rem;">
+                  <option value="0.25">0.25x</option>
+                  <option value="0.5">0.5x</option>
+                  <option value="1" selected>1x</option>
+                  <option value="2">2x</option>
+                </select>
+                <button id="btn-jump-side" class="btn btn-sm" style="display:none;" title="בזמן קפיצה ניתן לבדוק ערך רגע לפני ורגע אחרי"></button>
+              </div>
+              <div class="toolbar-group">
+                <label class="check-label"><input type="checkbox" id="chk-compare"> הצג גם רשת נגדית</label>
+                <label class="check-label"><input type="checkbox" id="chk-tau" checked> סמן <bdi dir="ltr" class="ltr-term">τ / 5τ</bdi></label>
+                <label class="check-label"><input type="checkbox" id="chk-endpoints" checked> נקודות קצה</label>
+              </div>
+            </div>
+
+            <div class="canvas-wrap" style="border:none; border-radius:0;">
+              <canvas id="lab-scope-canvas" data-height="390"></canvas>
+            </div>
+
+            <div style="padding: 0.65rem 0.9rem; background: var(--card-soft); border-top: 1px solid var(--border); display:flex; align-items:center; gap:0.75rem;">
+              <span style="font-size:0.85rem; color:var(--muted); white-space:nowrap;">סמן זמן:</span>
+              <input id="lab-time-scrubber" type="range" min="0" max="1000" value="1000" dir="ltr">
+              <span id="lab-cursor-t-badge" class="ltr-inline" dir="ltr" style="white-space:nowrap;">t = 0 ms</span>
+            </div>
+
+            <div class="live-readout-strip">
+              <div class="stat-chip"><div class="stat-lbl">מתח מבוא <bdi dir="ltr" class="ltr-term">Vi</bdi></div><div id="read-vi" class="stat-val" style="color:var(--accent);">0.00 V</div></div>
+              <div class="stat-chip"><div class="stat-lbl">מתח קבל <bdi dir="ltr" class="ltr-term">VC (LP)</bdi></div><div id="read-vc" class="stat-val" style="color:var(--lp-color);">0.00 V</div></div>
+              <div class="stat-chip"><div class="stat-lbl">מתח נגד <bdi dir="ltr" class="ltr-term">VR (HP)</bdi></div><div id="read-vr" class="stat-val" style="color:var(--hp-color);">0.00 V</div></div>
+              <div class="stat-chip"><div class="stat-lbl">זרם בחוג <bdi dir="ltr" class="ltr-term">I</bdi></div><div id="read-i" class="stat-val">0.00 mA</div></div>
+              <div class="stat-chip"><div class="stat-lbl">זמן בקטע <bdi dir="ltr" class="ltr-term">Δt</bdi></div><div id="read-dt" class="stat-val">0.00 ms</div></div>
+            </div>
+          </div>
+
+          <!-- Live Point & Time Calculator -->
+          <div class="card">
+            <div class="card-title">
+              <span>מחשבון נקודה חיה על הגרף — הצבה שלב-אחר-שלב</span>
+              <div class="segmented" id="insp-mode-seg">
+                <button class="seg-btn active" data-mode="voltage">חשב מתח בזמן <bdi dir="ltr" class="ltr-term">Vo(t)</bdi></button>
+                <button class="seg-btn" data-mode="time">מצא זמן למתח <bdi dir="ltr" class="ltr-term">t(V)</bdi></button>
+              </div>
+            </div>
+
+            <div class="inspector-grid">
+              <div class="card" style="background:var(--card-soft);">
+                <div id="insp-voltage-box">
+                  <div class="field-row">
+                    <label class="field-label" for="insp-t-input"><span>הזן זמן לבדיקה (<span id="insp-t-unit" dir="ltr">ms</span>)</span></label>
+                    <input id="insp-t-input" class="input-box ltr-input" type="text" inputmode="decimal" value="2">
+                  </div>
+                  <div class="field-row">
+                    <label class="field-label" for="insp-side-select"><span>צד הקפיצה (חשוב ב-<bdi dir="ltr" class="ltr-term">HP</bdi>)</span></label>
+                    <select id="insp-side-select" class="select-box">
+                      <option value="after">מיד אחרי / בתוך הקטע (t⁺)</option>
+                      <option value="before">רגע לפני הקפיצה (t⁻)</option>
+                    </select>
+                  </div>
+                  <button id="btn-insp-calc-v" class="btn btn-primary" style="width:100%; margin-top:0.4rem;">📍 חשב וסמן על הגרף</button>
+                </div>
+
+                <div id="insp-time-box" style="display:none;">
+                  <div class="field-row">
+                    <label class="field-label" for="insp-v-input">מתח מטרה מבוקש (<bdi dir="ltr" class="ltr-term">V</bdi>)</label>
+                    <input id="insp-v-input" class="input-box ltr-input" type="text" inputmode="decimal" value="3">
+                  </div>
+                  <div class="field-row">
+                    <label class="field-label" for="insp-seg-select">קטע לחיפוש</label>
+                    <select id="insp-seg-select" class="select-box">
+                      <option value="all">כל הקטעים בגרף</option>
+                    </select>
+                  </div>
+                  <button id="btn-insp-calc-t" class="btn btn-primary" style="width:100%; margin-top:0.4rem;">⏱️ מצא זמן ב-<bdi dir="ltr" class="ltr-term">ln</bdi> וסמן</button>
+                </div>
+              </div>
+
+              <div id="insp-output" class="step-list">
+                <p class="section-lead" style="margin:0;">הזינו זמן או מתח מטרה כדי לראות את החישוב המלא בסגנון בגרות ואת הנקודה מסומנת בסיכה על האוסילוסקופ.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TAB 3: EXERCISE WORKSHOP & CUSTOM VALIDATOR
+         ================================================================ -->
+    <section id="tab-workshop" class="tab-panel">
+      <div class="workshop-header">
+        <div class="segmented" id="workshop-subtabs">
+          <button class="seg-btn active" data-sub="curated">📖 תרגילי יחידה ובגרות (12)</button>
+          <button class="seg-btn" data-sub="mcdril">🎯 אימון שלבים ו-<bdi dir="ltr" class="ltr-term">τ</bdi> (אמריקאי)</button>
+          <button class="seg-btn" data-sub="random">🎲 מחולל תרגול אינסופי</button>
+          <button class="seg-btn" data-sub="custom">🛠️ פתרון ואימות תרגיל משלי</button>
+        </div>
+        <div id="workshop-progress-badge" class="badge badge-done">פתרת 0 מתוך 12 תרגילים</div>
+      </div>
+
+      <div class="workshop-layout">
+        <div class="workshop-main-col">
+          <!-- Sub-tab 1: Curated 12 Exercises -->
+          <div id="sub-curated" class="workshop-subpanel">
+        <div class="filter-pills" id="ex-filter-pills">
+          <button class="chapter-pill active" data-filter="all">הכול (12)</button>
+          <button class="chapter-pill" data-filter="m16">מפגש 16: קירכהוף ו-<bdi dir="ltr" class="ltr-term">τ</bdi></button>
+          <button class="chapter-pill" data-filter="lp">מפגש 17: רשת <bdi dir="ltr" class="ltr-term">LP</bdi></button>
+          <button class="chapter-pill" data-filter="hp">מפגש 19: רשת <bdi dir="ltr" class="ltr-term">HP</bdi></button>
+          <button class="chapter-pill" data-filter="m20">מפגש 20: בגרות ומפסק</button>
+        </div>
+        <div id="curated-ex-list" class="exercise-list"></div>
+      </div>
+
+          <!-- Sub-tab 1B: Multiple-Choice Steps & τ / Unit Conversion Trainer -->
+          <div id="sub-mcdril" class="workshop-subpanel" style="display:none;">
+            <div class="card" style="margin-bottom: 1rem;">
+              <div class="module-head">
+                <h3 style="margin:0;">אימון שלבים ו-<bdi dir="ltr" class="ltr-term">τ</bdi> עם תשובות אמריקאיות</h3>
+                <span class="mod-badge"><span class="led-dot"></span>MC TRAINER</span>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; justify-content:space-between;">
+                <div style="display:flex; flex-wrap:wrap; gap:0.65rem; align-items:center;">
+                  <div class="segmented" id="mc-drill-mode">
+                    <button class="seg-btn active" data-mcmode="tau">⚡ חישוב <bdi dir="ltr" class="ltr-term">τ</bdi> והמרת יחידות</button>
+                    <button class="seg-btn" data-mcmode="stages">🧭 פירוק תרגיל מלא ל-5 שלבים</button>
+                  </div>
+                  <div id="mc-stages-net-wrap" style="display:none; align-items:center; gap:0.45rem;">
+                    <label for="mc-stages-net" style="font-size:0.86rem; color:var(--muted);">רשת:</label>
+                    <select id="mc-stages-net" class="select-box" style="width:auto; padding:0.35rem 0.65rem;">
+                      <option value="MIXED">מעורב אקראי (LP / HP)</option>
+                      <option value="LP">LP בלבד</option>
+                      <option value="HP">HP בלבד</option>
+                    </select>
+                  </div>
+                  <button id="btn-next-mc" class="btn btn-primary btn-sm">🎲 שאלה חדשה</button>
+                </div>
+                <span id="mc-score-badge" class="badge badge-accent">נכונות: 0 / 0 · רצף: 0</span>
+              </div>
+            </div>
+            <div id="mc-drill-host"></div>
+          </div>
+
+          <!-- Sub-tab 2: Randomized Trainer -->
+      <div id="sub-random" class="workshop-subpanel" style="display:none;">
+        <div class="card" style="margin-bottom: 1rem;">
+          <div class="card-title"><span>מחולל תרגילים אינסופי עם בדיקה וסימולציה</span></div>
+          <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end;">
+            <div class="field-row" style="margin:0; min-width:180px;">
+              <label class="field-label" for="rand-net">רשת</label>
+              <select id="rand-net" class="select-box">
+                <option value="MIXED">מעורב אקראי (LP / HP)</option>
+                <option value="LP">רשת LP בלבד</option>
+                <option value="HP">רשת HP בלבד</option>
+              </select>
+            </div>
+            <div class="field-row" style="margin:0; min-width:210px;">
+              <label class="field-label" for="rand-diff">רמת קושי</label>
+              <select id="rand-diff" class="select-box">
+                <option value="basic">בסיסית — מדרגה בודדת</option>
+                <option value="medium" selected>בינונית — דופק שלב-אחר-שלב</option>
+                <option value="bagrut">בגרות — דופק על רמה קבועה וזמן</option>
+              </select>
+            </div>
+            <button id="btn-gen-random" class="btn btn-primary">🎲 צור תרגיל חדש</button>
+          </div>
+        </div>
+        <div id="random-ex-container"></div>
+      </div>
+
+      <!-- Sub-tab 3: Custom Homework Problem Solver & Validator -->
+      <div id="sub-custom" class="workshop-subpanel" style="display:none;">
+        <div class="card">
+          <div class="card-title"><span>פתרון ואימות תרגיל מהמחברת או מדף העבודה</span></div>
+          <p class="section-lead">
+            הזינו את נתוני המעגל והמבוא מהתרגיל שלכם, בחרו מה מחפשים (מתח בזמן נתון או זמן למתח נתון), וכתבו את התשובה שחישבתם במחברת כדי לאמת אותה בסימולציה!
+          </p>
+
+          <div class="two-col-eq">
+            <div class="card" style="background:var(--card-soft);">
+              <h3 style="margin-top:0;">נתוני המעגל ואות המבוא</h3>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:0.7rem;">
+                <div class="field-row">
+                  <label class="field-label" for="cust-net">סוג רשת</label>
+                  <select id="cust-net" class="select-box">
+                    <option value="LP">LP (מוצא על הקבל)</option>
+                    <option value="HP">HP (מוצא על הנגד)</option>
+                  </select>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cust-wave">צורת מבוא</label>
+                  <select id="cust-wave" class="select-box">
+                    <option value="pulse" selected>דופק (Pulse)</option>
+                    <option value="step">מדרגה (Step)</option>
+                  </select>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cust-r"><span>נגד <bdi dir="ltr" class="ltr-term">R</bdi></span></label>
+                  <div class="input-combo">
+                    <input id="cust-r" class="input-box ltr-input" type="number" step="0.1" value="10">
+                    <select id="cust-r-u" class="select-box" dir="ltr">
+                      <option value="Ω">Ω</option>
+                      <option value="kΩ" selected>kΩ</option>
+                      <option value="MΩ">MΩ</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cust-c"><span>קבל <bdi dir="ltr" class="ltr-term">C</bdi></span></label>
+                  <div class="input-combo">
+                    <input id="cust-c" class="input-box ltr-input" type="number" step="0.1" value="0.1">
+                    <select id="cust-c-u" class="select-box" dir="ltr">
+                      <option value="nF">nF</option>
+                      <option value="µF" selected>µF</option>
+                      <option value="mF">mF</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:0.7rem; margin-top:0.7rem;">
+                <div class="field-row">
+                  <label class="field-label" for="cust-vbase"><span>רמה לפני (<bdi dir="ltr" class="ltr-term">V</bdi>)</span></label>
+                  <input id="cust-vbase" class="input-box ltr-input" type="number" step="0.5" value="0">
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cust-vpulse"><span>רמה במדרגה/דופק (<bdi dir="ltr" class="ltr-term">V</bdi>)</span></label>
+                  <input id="cust-vpulse" class="input-box ltr-input" type="number" step="0.5" value="10">
+                </div>
+                <div class="field-row" id="cust-vafter-wrap">
+                  <label class="field-label" for="cust-vafter"><span>רמה אחרי הדופק (<bdi dir="ltr" class="ltr-term">V</bdi>)</span></label>
+                  <input id="cust-vafter" class="input-box ltr-input" type="number" step="0.5" value="0">
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cust-t1"><span>זמן התחלה (<bdi dir="ltr" class="ltr-term">ms</bdi>)</span></label>
+                  <input id="cust-t1" class="input-box ltr-input" type="number" step="0.5" value="1">
+                </div>
+                <div class="field-row" id="cust-t2-wrap">
+                  <label class="field-label" for="cust-t2"><span>זמן סיום דופק (<bdi dir="ltr" class="ltr-term">ms</bdi>)</span></label>
+                  <input id="cust-t2" class="input-box ltr-input" type="number" step="0.5" value="3">
+                </div>
+              </div>
+
+              <hr style="border:none; border-top:1px solid var(--border); margin:0.9rem 0;">
+
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.7rem;">
+                <div class="field-row">
+                  <label class="field-label" for="cust-qtype">מה מחפשים?</label>
+                  <select id="cust-qtype" class="select-box">
+                    <option value="v_at_t">מתח המוצא בזמן נתון Vo(t)</option>
+                    <option value="t_at_v">מתי המוצא מגיע למתח V</option>
+                  </select>
+                </div>
+                <div class="field-row">
+                  <label class="field-label" id="cust-qparam-lbl" for="cust-qparam"><span>הזמן המבוקש (<bdi dir="ltr" class="ltr-term">ms</bdi>)</span></label>
+                  <input id="cust-qparam" class="input-box ltr-input" type="text" inputmode="decimal" value="4">
+                </div>
+                <div class="field-row">
+                  <label class="field-label" for="cust-student-ans">התשובה שחישבתי (לא חובה)</label>
+                  <input id="cust-student-ans" class="input-box ltr-input" type="text" inputmode="decimal" placeholder="-3.18">
+                </div>
+              </div>
+
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.85rem;">
+                <button id="btn-cust-verify" class="btn btn-primary">✅ בדוק ואמת בסימולציה</button>
+                <button id="btn-cust-to-lab" class="btn">🔬 טען למעבדה המלאה</button>
+              </div>
+              <div id="cust-feedback" class="feedback-msg"></div>
+            </div>
+
+            <div>
+              <div class="canvas-wrap" style="margin-bottom:0.85rem;">
+                <canvas id="cust-scope-canvas" data-height="310"></canvas>
+              </div>
+              <div id="cust-steps" class="step-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <aside id="workshop-unit-sidebar" class="unit-sidebar" aria-label="טבלת קידומות והמרת יחידות"></aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================================================
+       SLIDE-OVER FORMULA SHEET & AUXILIARY CALCULATORS DRAWER
+       ================================================================ -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+  <aside id="formula-drawer" class="formula-drawer" aria-label="דף נוסחאות ומחשבוני עזר">
+    <div class="drawer-head">
+      <div>
+        <h2 style="margin:0; font-size:1.1rem;">📄 דף נוסחאות רשתות <bdi dir="ltr" class="ltr-term">LP</bdi> ו-<bdi dir="ltr" class="ltr-term">HP</bdi> (יחידה <bdi dir="ltr" class="ltr-term">U4</bdi>)</h2>
+        <p style="margin:0; font-size:0.82rem; color:var(--muted);">מותאם לדף הנוסחאות הרשמי לבגרות · שאלון <bdi dir="ltr" class="ltr-term">815381</bdi></p>
+      </div>
+      <button id="btn-close-formulas" class="btn btn-sm">✕ סגור</button>
+    </div>
+    <div class="drawer-body">
+      <div id="formula-tables-host"></div>
+
+      <div class="card" style="background:var(--card-soft);">
+        <h3 style="margin-top:0; font-size:0.98rem;">מחשבוני עזר מהירים</h3>
+        <div class="aux-calc-grid">
+          <div class="card">
+            <strong style="display:block; margin-bottom:0.45rem;">1. קבוע הזמן <bdi dir="ltr" class="ltr-term">τ = R · C</bdi></strong>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <input id="aux-r" class="input-box ltr-input" type="number" step="0.1" value="10">
+              <select id="aux-ru" class="select-box" dir="ltr"><option value="Ω">Ω</option><option value="kΩ" selected>kΩ</option><option value="MΩ">MΩ</option></select>
+            </div>
+            <div class="input-combo" style="margin-bottom:0.45rem;">
+              <input id="aux-c" class="input-box ltr-input" type="number" step="0.1" value="0.1">
+              <select id="aux-cu" class="select-box" dir="ltr"><option value="nF">nF</option><option value="µF" selected>µF</option><option value="mF">mF</option></select>
+            </div>
+            <div id="aux-tau-res" class="math-block" dir="ltr">τ = 1 ms  |  5τ = 5 ms</div>
+          </div>
+
+          <div class="card">
+            <strong style="display:block; margin-bottom:0.45rem;">2. שני נגדים במקביל <bdi dir="ltr" class="ltr-term">R₁ || R₂</bdi></strong>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <input id="aux-r1p" class="input-box ltr-input" type="number" step="0.5" value="50">
+              <span class="ltr-inline" dir="ltr">kΩ</span>
+            </div>
+            <div class="input-combo" style="margin-bottom:0.45rem;">
+              <input id="aux-r2p" class="input-box ltr-input" type="number" step="0.5" value="15">
+              <span class="ltr-inline" dir="ltr">kΩ</span>
+            </div>
+            <div id="aux-par-res" class="math-block" dir="ltr">R_eq = 11.54 kΩ</div>
+          </div>
+
+          <div class="card">
+            <strong style="display:block; margin-bottom:0.45rem;">3. קיבול שקול <bdi dir="ltr" class="ltr-term">C₁, C₂</bdi></strong>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <input id="aux-c1" class="input-box ltr-input" type="number" step="0.1" value="2">
+              <input id="aux-c2" class="input-box ltr-input" type="number" step="0.1" value="6">
+              <span class="ltr-inline" dir="ltr">µF</span>
+            </div>
+            <div id="aux-cap-res" class="math-block" dir="ltr">Series: 1.5 µF | Parallel: 8 µF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</body>
+</html>

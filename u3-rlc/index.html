@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מעבדת RLC אינטראקטיבית — זרם חילופין ותהודה (יחידה U3)</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="engine.js"></script>
+  <script defer src="visuals.js"></script>
+  <script defer src="content.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand" id="brand-home-trigger" role="button" tabindex="0" title="חזרה למסך הראשי">
+        <div class="brand-icon" dir="ltr">RLC</div>
+        <div>
+          <h1 class="brand-title">מעבדת <bdi dir="ltr" class="ltr-term">RL, RC</bdi> ו-<bdi dir="ltr" class="ltr-term">RLC</bdi> בזרם חילופין</h1>
+          <p class="brand-sub">יחידה <bdi dir="ltr" class="ltr-term">U3</bdi> · אלקטרוניקה תקבילית כיתה י"א · שאלון <bdi dir="ltr" class="ltr-term">815381</bdi></p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="ניווט ראשי">
+        <button class="nav-btn home-nav-btn active" data-tab="home" title="מסך בחירת הפרקים הראשי">🏠 ראשי</button>
+        <button class="nav-btn" data-tab="intro"><span class="nav-num" dir="ltr">1</span> 📚 מבוא ואינטואיציה</button>
+        <button class="nav-btn" data-tab="lab"><span class="nav-num" dir="ltr">2</span> 🔬 מעבדת חקר וסימולציה</button>
+        <button class="nav-btn" data-tab="workshop"><span class="nav-num" dir="ltr">3</span> ✍️ סדנת תרגול ואימות</button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="btn-open-formulas" class="btn">📄 דף נוסחאות ומחשבונים</button>
+        <button id="btn-toggle-theme" class="btn" title="החלף בין מצב כיתה בהיר למצב מעבדה כהה">🌙 מצב מעבדה כהה</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- ================================================================
+         TAB 0: HOME / 3 PRIMARY ENTRY BUTTONS LAUNCH HUB
+         ================================================================ -->
+    <section id="tab-home" class="tab-panel active">
+      <div class="home-hero">
+        <span class="mod-badge"><span class="led-dot"></span>יחידה <bdi dir="ltr" class="ltr-term">U3</bdi> · זרם חילופין ותהודה</span>
+        <h2>בחרו פרק להתחלה — דיאגרמת מחוגים, מדי <bdi dir="ltr" class="ltr-term">A/V</bdi>, מתח אפקטיבי ותהודה</h2>
+        <p>לחצו על אחד משלושת החלקים כדי להיכנס אליו. בכל שלב תוכלו לעבור דרך הסרגל העליון בין ההסבר הוויזואלי, מעבדת הפאזורים והמדים, וסדנת התרגול לבגרות.</p>
+      </div>
+
+      <div class="home-cards-grid">
+        <!-- Primary Card 1: Intro -->
+        <div class="home-card card-intro" data-launch-tab="intro" role="button" tabindex="0">
+          <div class="home-card-top">
+            <span class="home-step-pill" dir="ltr">01 · INTRO</span>
+            <span id="home-intro-badge" class="badge badge-resonant">4 תחנות לימוד</span>
+          </div>
+          <div class="home-preview-box">
+            <svg class="home-preview-svg" viewBox="0 0 260 76" aria-hidden="true">
+              <line x1="20" y1="58" x2="236" y2="58" stroke="var(--border-strong)" stroke-width="1"/>
+              <line x1="36" y1="58" x2="140" y2="58" stroke="var(--ur-color)" stroke-width="2.8"/>
+              <line x1="140" y1="58" x2="140" y2="16" stroke="var(--ul-color)" stroke-width="2.6"/>
+              <line x1="36" y1="58" x2="140" y2="16" stroke="var(--z-color)" stroke-width="2.8"/>
+              <text x="86" y="71" fill="var(--ur-color)" font-size="10.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">R / UR</text>
+              <text x="148" y="40" fill="var(--ul-color)" font-size="10.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">X = XL−XC</text>
+              <text x="64" y="30" fill="var(--z-color)" font-size="11" font-family="var(--font-mono)" font-weight="700" direction="ltr">Z = √(R²+X²)</text>
+            </svg>
+          </div>
+          <h3>📚 מבוא ואינטואיציה</h3>
+          <p>מתי <bdi dir="ltr" class="ltr-inline">U</bdi> כבר אפקטיבי מול משוואת <bdi dir="ltr" class="ltr-inline">u(t)</bdi>, חיבור מד-זרם ומד-מתח, דיאגרמת מחוגים ומשולש עכבות, קיזוז <bdi dir="ltr" class="ltr-inline">UL−UC</bdi> ותהודה דרך <bdi dir="ltr" class="ltr-inline">XL=XC</bdi>.</p>
+          <div class="home-chips">
+            <button type="button" class="home-chip" data-home-intro="ch1">תחנה 1: <bdi dir="ltr" class="ltr-term">Ueff</bdi> ומדי <bdi dir="ltr" class="ltr-term">A/V</bdi></button>
+            <button type="button" class="home-chip" data-home-intro="ch2">תחנה 2: מחוגים ב-<bdi dir="ltr" class="ltr-term">RL/RC</bdi></button>
+            <button type="button" class="home-chip" data-home-intro="ch3">תחנה 3: פאזורים ב-<bdi dir="ltr" class="ltr-term">RLC</bdi></button>
+            <button type="button" class="home-chip" data-home-intro="ch4">תחנה 4: תהודה <bdi dir="ltr" class="ltr-term">XL=XC</bdi></button>
+          </div>
+          <span class="home-cta-btn">כניסה למבוא ואינטואיציה ←</span>
+        </div>
+
+        <!-- Primary Card 2: Interactive Lab -->
+        <div class="home-card card-lab" data-launch-tab="lab" role="button" tabindex="0">
+          <div class="home-card-top">
+            <span class="home-step-pill" dir="ltr">02 · LIVE AC LAB</span>
+            <span class="badge badge-accent" dir="ltr">PHASORS + METERS</span>
+          </div>
+          <div class="home-preview-box">
+            <svg class="home-preview-svg" viewBox="0 0 260 76" aria-hidden="true">
+              <!-- Phasor Diagram + Series/Parallel Meters Preview -->
+              <line x1="20" y1="42" x2="128" y2="42" stroke="var(--border-strong)" stroke-width="1"/>
+              <line x1="34" y1="8" x2="34" y2="70" stroke="var(--border-strong)" stroke-width="1"/>
+              <line x1="34" y1="42" x2="96" y2="42" stroke="var(--ur-color)" stroke-width="2.6"/>
+              <line x1="34" y1="42" x2="34" y2="12" stroke="var(--ul-color)" stroke-width="2.4"/>
+              <line x1="34" y1="42" x2="34" y2="66" stroke="var(--uc-color)" stroke-width="2.4"/>
+              <line x1="34" y1="42" x2="96" y2="22" stroke="var(--u-color)" stroke-width="2.6"/>
+              <text x="100" y="23" fill="var(--u-color)" font-size="10" font-family="var(--font-mono)" font-weight="700" direction="ltr">U</text>
+              <text x="40" y="16" fill="var(--ul-color)" font-size="9.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">UL</text>
+              <text x="40" y="69" fill="var(--uc-color)" font-size="9.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">UC</text>
+              <!-- Schematic Meters preview on right -->
+              <rect x="148" y="18" width="94" height="42" rx="4" fill="none" stroke="var(--border-strong)" stroke-width="1.6"/>
+              <circle cx="195" cy="18" r="10" fill="var(--card)" stroke="var(--ur-color)" stroke-width="1.8"/>
+              <text x="195" y="22" text-anchor="middle" fill="var(--ur-color)" font-size="10.5" font-family="var(--font-mono)" font-weight="800">V</text>
+              <circle cx="195" cy="60" r="10" fill="var(--card)" stroke="var(--z-color)" stroke-width="1.8"/>
+              <text x="195" y="64" text-anchor="middle" fill="var(--z-color)" font-size="10.5" font-family="var(--font-mono)" font-weight="800">A</text>
+            </svg>
+          </div>
+          <h3>🔬 מעבדת חקר וסימולציה</h3>
+          <p>דיאגרמת מחוגים ומשולש עכבות, סכימה עם חיבור מד-זרם (<bdi dir="ltr" class="ltr-term">A</bdi>) ומד-מתח (<bdi dir="ltr" class="ltr-term">V</bdi>) על כל רכיב, מפענח <bdi dir="ltr" class="ltr-inline">u(t) ↔ Ueff</bdi> וחיתוך <bdi dir="ltr" class="ltr-inline">XL = XC</bdi>.</p>
+          <div class="home-chips">
+            <button type="button" class="home-chip" data-home-lab="rl-basic">מעגל <bdi dir="ltr" class="ltr-term">RL</bdi> טורי</button>
+            <button type="button" class="home-chip" data-home-lab="rc-bagrut2021">מעגל <bdi dir="ltr" class="ltr-term">RC</bdi> טורי</button>
+            <button type="button" class="home-chip" data-home-lab="rlc-res">🎯 תהודה ב-<bdi dir="ltr" class="ltr-term">RLC</bdi></button>
+            <button type="button" class="home-chip" data-home-lab="bagrut-2017-sw">מפסק מקצר קבל</button>
+          </div>
+          <span class="home-cta-btn">כניסה למעבדת החקר ←</span>
+        </div>
+
+        <!-- Primary Card 3: Exercise Workshop -->
+        <div class="home-card card-workshop" data-launch-tab="workshop" role="button" tabindex="0">
+          <div class="home-card-top">
+            <span class="home-step-pill" dir="ltr">03 · WORKSHOP</span>
+            <span id="home-solved-badge" class="badge badge-done">פתרת 0/14</span>
+          </div>
+          <div class="home-preview-box">
+            <svg class="home-preview-svg" viewBox="0 0 260 76" aria-hidden="true">
+              <line x1="16" y1="62" x2="244" y2="62" stroke="var(--border-strong)" stroke-width="1"/>
+              <line x1="22" y1="58" x2="236" y2="14" stroke="var(--ul-color)" stroke-width="2.3"/>
+              <path d="M24 14 Q92 48, 236 58" fill="none" stroke="var(--uc-color)" stroke-width="2.3"/>
+              <line x1="118" y1="12" x2="118" y2="62" stroke="var(--ur-color)" stroke-dasharray="3 3" stroke-width="1.5"/>
+              <circle cx="118" cy="39" r="4.5" fill="var(--ur-color)"/>
+              <text x="132" y="25" fill="var(--ur-color)" font-size="10.5" font-family="var(--font-mono)" font-weight="700" direction="ltr">XL = XC  |  f₀ ✓</text>
+            </svg>
+          </div>
+          <h3>✍️ סדנת תרגול ואימות</h3>
+          <p>14 תרגילי כיתה ובגרות עם שלבים אמריקאיים, אימון חילוץ <bdi dir="ltr" class="ltr-inline">Ueff</bdi> מ-<bdi dir="ltr" class="ltr-inline">u(t)</bdi>, קריאת מדים, תהודה דרך <bdi dir="ltr" class="ltr-inline">XL = XC</bdi> והמרות יחידות.</p>
+          <div class="home-chips">
+            <button type="button" class="home-chip" data-home-workshop="curated">📋 14 תרגילי בגרות</button>
+            <button type="button" class="home-chip" data-home-workshop="mcdril">🎯 אימון אמריקאי</button>
+            <button type="button" class="home-chip" data-home-workshop="random">🎲 מחולל אקראי</button>
+            <button type="button" class="home-chip" data-home-workshop="custom">🔍 בודק שיעורי בית</button>
+          </div>
+          <span class="home-cta-btn">כניסה לסדנת התרגול ←</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TAB 1: INTRODUCTION & INTUITION (4-STATION JOURNEY PIPELINE)
+         ================================================================ -->
+    <section id="tab-intro" class="tab-panel">
+      <div class="journey-shell">
+        <div class="journey-header">
+          <div class="journey-title-group">
+            <span class="journey-kicker">מסלול לימוד מובנה · 4 תחנות חובה לפי הסדר</span>
+            <span class="journey-sub">כל תחנה היא נושא נפרד שבונה את ההבנה לתחנה הבאה — מומלץ לעבור על כולן (<bdi dir="ltr" class="ltr-term">1 → 2 → 3 → 4</bdi>)</span>
+          </div>
+          <div class="journey-progress-box">
+            <span id="intro-journey-count" class="badge badge-accent">עברת על 1 מתוך 4 נושאים</span>
+            <div class="journey-seg-bar" id="intro-journey-segs" aria-hidden="true">
+              <span class="j-seg active"></span>
+              <span class="j-seg"></span>
+              <span class="j-seg"></span>
+              <span class="j-seg"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-track" id="intro-chapter-nav" role="tablist" aria-label="תחנות פרק המבוא">
+          <button type="button" class="journey-step-card active" data-chapter="ch1">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 1</span>
+              <span class="j-step-status" data-status-for="ch1">● בצפייה כעת</span>
+            </div>
+            <div class="j-step-title">מתח אפקטיבי u(t) וחיבור מדים</div>
+            <div class="j-step-formula" dir="ltr">Ueff = Um/√2 | A בטור, V במקביל</div>
+            <div class="j-step-bridge">מוביל לתחנה 2: מחוגי R, L, C</div>
+          </button>
+
+          <div class="journey-arrow" data-arrow-after="ch1" aria-hidden="true">←</div>
+
+          <button type="button" class="journey-step-card" data-chapter="ch2">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 2</span>
+              <span class="j-step-status" data-status-for="ch2">○ ממתין למעבר</span>
+            </div>
+            <div class="j-step-title">דיאגרמת מחוגים ומשולש עכבות</div>
+            <div class="j-step-formula" dir="ltr">Z = √(R² + X²) , ELI / ICE</div>
+            <div class="j-step-bridge">מוביל לתחנה 3: קיזוז ב-RLC</div>
+          </button>
+
+          <div class="journey-arrow" data-arrow-after="ch2" aria-hidden="true">←</div>
+
+          <button type="button" class="journey-step-card" data-chapter="ch3">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 3</span>
+              <span class="j-step-status" data-status-for="ch3">○ ממתין למעבר</span>
+            </div>
+            <div class="j-step-title">דיאגרמת פאזורים ב-RLC וקיזוז</div>
+            <div class="j-step-formula" dir="ltr">X = XL − XC , UL − UC</div>
+            <div class="j-step-bridge">מוביל לתחנה 4: תהודה XL=XC</div>
+          </button>
+
+          <div class="journey-arrow" data-arrow-after="ch3" aria-hidden="true">←</div>
+
+          <button type="button" class="journey-step-card" data-chapter="ch4">
+            <div class="j-step-top">
+              <span class="j-step-num">תחנה 4</span>
+              <span class="j-step-status" data-status-for="ch4">○ ממתין למעבר</span>
+            </div>
+            <div class="j-step-title">תדר תהודה בפאזורים ושוויון XL=XC</div>
+            <div class="j-step-formula" dir="ltr">XL = XC ⇒ f₀ = 1/(2π√LC)</div>
+            <div class="j-step-bridge">מוביל למעבדת החקר ולתרגול!</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Station 1: Effective Voltage Ueff vs u(t) + Ammeter (series) & Voltmeter (parallel) -->
+      <div id="intro-ch1" class="intro-chapter">
+        <div class="card" style="margin-bottom: 1rem;">
+          <div class="card-title">
+            <span>חלק א׳: מתי המתח כבר אפקטיבי (<bdi dir="ltr" class="ltr-term">Ueff</bdi>) ואיך מחלצים ממשוואת הסינוס <bdi dir="ltr" class="ltr-inline">u(t)</bdi>?</span>
+            <span class="badge badge-accent">מפגש 12 · פענוח מקור</span>
+          </div>
+          <p class="section-lead">
+            הטעות הנפוצה ביותר בבגרות היא חלוקה ב-<bdi dir="ltr" class="ltr-inline">√2</bdi> כשלא צריך, או שכחת החלוקה כשנתונה משוואה. לחצו על כל מקרה וראו את ההבדל:
+          </p>
+
+          <div class="segmented" id="intro-sine-case-btns" style="margin-bottom: 0.9rem;">
+            <button type="button" class="seg-btn" data-sinecase="case_rms">1. קריאת מד-מתח / <bdi dir="ltr" class="ltr-term">U</bdi> נתון</button>
+            <button type="button" class="seg-btn active" data-sinecase="case_eq_sqrt2">2א. <bdi dir="ltr" class="ltr-term">u(t) = 25√2·sin(2000t)</bdi></button>
+            <button type="button" class="seg-btn" data-sinecase="case_eq_num">2ב. <bdi dir="ltr" class="ltr-term">u(t) = 311.13·sin(2π·1000t)</bdi></button>
+            <button type="button" class="seg-btn" data-sinecase="case_upp">3. מתח שיא-לשיא <bdi dir="ltr" class="ltr-term">Up-p</bdi></button>
+          </div>
+
+          <div id="intro-sine-anatomy" class="card" style="background: var(--card-soft);"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>חלק ב׳: חיבור מד-זרם (<bdi dir="ltr" class="ltr-term">A</bdi>) בטור ומד-מתח (<bdi dir="ltr" class="ltr-term">V</bdi>) במקביל לרכיב</span>
+            <span class="badge badge-resonant">כל מדים ב-AC קוראים RMS</span>
+          </div>
+          <p class="section-lead">
+            במעגל טורי הזרם שווה בכל מקום — לכן מד-זרם (<bdi dir="ltr" class="ltr-term">A</bdi>) תמיד מחובר <strong>בטור</strong>. מד-מתח (<bdi dir="ltr" class="ltr-term">V</bdi>) תמיד מחובר <strong>במקביל</strong> לרכיב שאותו בודקים, ומנת הקריאות (<bdi dir="ltr" class="ltr-inline">V/A</bdi>) נותנת מיד את ההתנגדות או ההיגב! בחרו להיכן לחבר את מד-המתח:
+          </p>
+
+          <div class="segmented" id="intro-meter-target-btns" style="margin-bottom: 0.85rem;">
+            <button type="button" class="seg-btn" data-mtarget="U">במקביל למקור (<bdi dir="ltr" class="ltr-term">U</bdi>)</button>
+            <button type="button" class="seg-btn active" data-mtarget="UR">במקביל לנגד (<bdi dir="ltr" class="ltr-term">UR</bdi>)</button>
+            <button type="button" class="seg-btn" data-mtarget="UL">במקביל לסליל (<bdi dir="ltr" class="ltr-term">UL</bdi>)</button>
+            <button type="button" class="seg-btn" data-mtarget="UC">במקביל לקבל (<bdi dir="ltr" class="ltr-term">UC</bdi>)</button>
+            <button type="button" class="seg-btn" data-mtarget="ALL">כל המדים יחד</button>
+          </div>
+
+          <div class="two-col-eq">
+            <div class="canvas-wrap">
+              <canvas id="intro-meter-canvas" data-height="255"></canvas>
+            </div>
+            <div class="card" style="background: var(--card-soft);">
+              <div class="module-head">
+                <h3 style="margin:0;">תוצאת המדידה והסקה</h3>
+                <span class="mod-badge"><span class="led-dot ur"></span>METERS</span>
+              </div>
+              <div id="intro-meter-metrics" class="kvl-quick-metrics"></div>
+              <div id="intro-meter-explain" style="font-size:0.9rem; line-height:1.55; margin:0.65rem 0;"></div>
+              <div class="math-block" id="intro-meter-math" dir="ltr"></div>
+              <div style="margin-top:0.85rem;">
+                <button id="btn-comp-to-lab" class="btn btn-primary btn-sm">🔬 בדוק חיבורי מדים במעבדה</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Station 2: Phasor Directions + RL vs RC Series -->
+      <div id="intro-ch2" class="intro-chapter" style="display:none;">
+        <div class="phase-axis-strip">
+          <div class="phase-axis-pill" style="border-top: 3px solid var(--ur-color);">
+            <strong style="color:var(--ur-color);">נגד <bdi dir="ltr" class="ltr-term">R</bdi> · ציר <bdi dir="ltr" class="ltr-inline">0°</bdi></strong><br>
+            מתח הנגד <bdi dir="ltr" class="ltr-inline">UR</bdi> נמצא <strong>באותו כיוון</strong> של הזרם <bdi dir="ltr" class="ltr-inline">I</bdi>.
+          </div>
+          <div class="phase-axis-pill" style="border-top: 3px solid var(--ul-color);">
+            <strong style="color:var(--ul-color);">משרן <bdi dir="ltr" class="ltr-term">L</bdi> · ציר <bdi dir="ltr" class="ltr-inline">+90° (ELI)</bdi></strong><br>
+            המתח <bdi dir="ltr" class="ltr-inline">UL</bdi> מקדים את <bdi dir="ltr" class="ltr-inline">I</bdi> ← חץ <strong>כלפי מעלה</strong> (<bdi dir="ltr" class="ltr-inline">XL = ωL</bdi>).
+          </div>
+          <div class="phase-axis-pill" style="border-top: 3px solid var(--uc-color);">
+            <strong style="color:var(--uc-color);">קבל <bdi dir="ltr" class="ltr-term">C</bdi> · ציר <bdi dir="ltr" class="ltr-inline">−90° (ICE)</bdi></strong><br>
+            הזרם <bdi dir="ltr" class="ltr-inline">I</bdi> מקדים את <bdi dir="ltr" class="ltr-inline">UC</bdi> ← חץ <strong>כלפי מטה</strong> (<bdi dir="ltr" class="ltr-inline">XC = 1/(ωC)</bdi>).
+          </div>
+        </div>
+
+        <div class="compare-cards">
+          <div class="card" style="border-top: 4px solid var(--ul-color);">
+            <div class="card-title">
+              <span>מעגל <bdi dir="ltr" class="ltr-term">RL</bdi> טורי — אופי השראי</span>
+              <span class="badge badge-inductive" dir="ltr">φ = +tan⁻¹(XL/R) &gt; 0°</span>
+            </div>
+            <div class="canvas-wrap" style="margin-bottom:0.8rem;">
+              <canvas id="intro-rl-canvas" data-height="230"></canvas>
+            </div>
+            <p>הנגד והמשרן מחוברים בטור ולכן זורם בהם <strong>אותו זרם <bdi dir="ltr" class="ltr-inline">I</bdi></strong>. המתח על המשרן <bdi dir="ltr" class="ltr-inline">UL</bdi> מצביע ב-<bdi dir="ltr" class="ltr-inline">+90°</bdi> מעל <bdi dir="ltr" class="ltr-inline">UR</bdi>, ולכן מחברים בפיתגורס.</p>
+            <div class="spec-grid">
+              <div class="spec-tile"><span class="spec-tag">📐 משולש העכבות</span><div class="spec-val"><bdi dir="ltr" class="ltr-inline">Z = √(R² + XL²)</bdi></div></div>
+              <div class="spec-tile"><span class="spec-tag">⚡ חיבור מחוגים</span><div class="spec-val"><bdi dir="ltr" class="ltr-inline">U = √(UR² + UL²)</bdi></div></div>
+              <div class="spec-tile"><span class="spec-tag">📈 תלות בתדר</span><div class="spec-val">עליית <bdi dir="ltr" class="ltr-term">f</bdi> מגדילה <bdi dir="ltr" class="ltr-term">XL, Z</bdi> ומקטינה <bdi dir="ltr" class="ltr-term">I</bdi></div></div>
+              <div class="spec-tile"><span class="spec-tag">🧭 זווית מופע</span><div class="spec-val">המתח מקדים את הזרם (<bdi dir="ltr" class="ltr-term">ELI</bdi>)</div></div>
+            </div>
+            <button class="btn btn-inductive btn-sm" data-launch-preset="rl-basic">טען מעגל <bdi dir="ltr" class="ltr-term">RL</bdi> למעבדה</button>
+          </div>
+
+          <div class="card" style="border-top: 4px solid var(--uc-color);">
+            <div class="card-title">
+              <span>מעגל <bdi dir="ltr" class="ltr-term">RC</bdi> טורי — אופי קיבולי</span>
+              <span class="badge badge-capacitive" dir="ltr">φ = -tan⁻¹(XC/R) &lt; 0°</span>
+            </div>
+            <div class="canvas-wrap" style="margin-bottom:0.8rem;">
+              <canvas id="intro-rc-canvas" data-height="230"></canvas>
+            </div>
+            <p>המתח על הקבל <bdi dir="ltr" class="ltr-inline">UC</bdi> מפגר ב-<bdi dir="ltr" class="ltr-inline">90°</bdi> אחרי הזרם (מצביע למטה במחוגים). כלומר <strong>הזרם מקדים את המתח</strong> וזווית המופע <bdi dir="ltr" class="ltr-inline">φ</bdi> היא תמיד <strong>שלילית</strong>!</p>
+            <div class="spec-grid">
+              <div class="spec-tile"><span class="spec-tag">📐 משולש העכבות</span><div class="spec-val"><bdi dir="ltr" class="ltr-inline">Z = √(R² + XC²)</bdi></div></div>
+              <div class="spec-tile"><span class="spec-tag">⚡ חיבור מחוגים</span><div class="spec-val"><bdi dir="ltr" class="ltr-inline">U = √(UR² + UC²)</bdi></div></div>
+              <div class="spec-tile"><span class="spec-tag">📈 תלות בתדר</span><div class="spec-val">עליית <bdi dir="ltr" class="ltr-term">f</bdi> מקטינה <bdi dir="ltr" class="ltr-term">XC, Z</bdi> ומגדילה <bdi dir="ltr" class="ltr-term">I</bdi></div></div>
+              <div class="spec-tile"><span class="spec-tag">🧭 זווית מופע</span><div class="spec-val">הזרם מקדים את המתח (<bdi dir="ltr" class="ltr-term">ICE</bdi>)</div></div>
+            </div>
+            <button class="btn btn-capacitive btn-sm" data-launch-preset="rc-bagrut2021">טען מעגל <bdi dir="ltr" class="ltr-term">RC</bdi> למעבדה</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Station 3: Series RLC Phasors & Cancellation -->
+      <div id="intro-ch3" class="intro-chapter" style="display:none;">
+        <div class="card">
+          <div class="card-title">
+            <span>דיאגרמת פאזורים במעגל <bdi dir="ltr" class="ltr-term">RLC</bdi> טורי: למה <bdi dir="ltr" class="ltr-inline">UL</bdi> ו-<bdi dir="ltr" class="ltr-inline">UC</bdi> מקזזים זה את זה?</span>
+            <span class="badge badge-accent">מפגש 13</span>
+          </div>
+          <p class="section-lead">
+            מכיוון ש-<bdi dir="ltr" class="ltr-inline">UL</bdi> מצביע כלפי מעלה (<bdi dir="ltr" class="ltr-inline">+90°</bdi>) ו-<bdi dir="ltr" class="ltr-inline">UC</bdi> מצביע כלפי מטה (<bdi dir="ltr" class="ltr-inline">-90°</bdi>), ההפרש ביניהם הוא <bdi dir="ltr" class="ltr-inline">180°</bdi>! לכן מחסרים: <bdi dir="ltr" class="ltr-inline">X = XL - XC</bdi> ו-<bdi dir="ltr" class="ltr-inline">UX = UL - UC</bdi>. בדקו את שלושת המצבים בדיאגרמת הפאזורים:
+          </p>
+
+          <div class="segmented" id="intro-rlc-mode-btns" style="margin-bottom: 1rem;">
+            <button class="seg-btn active" data-rlcmode="inductive">1. השראי (<bdi dir="ltr" class="ltr-term">XL &gt; XC</bdi>)</button>
+            <button class="seg-btn" data-rlcmode="capacitive">2. קיבולי (<bdi dir="ltr" class="ltr-term">XC &gt; XL</bdi>)</button>
+            <button class="seg-btn" data-rlcmode="resonant">3. תהודה (<bdi dir="ltr" class="ltr-term">XL = XC</bdi>)</button>
+          </div>
+
+          <div class="two-col-eq">
+            <div class="canvas-wrap">
+              <canvas id="intro-rlc-phasor-canvas" data-height="275"></canvas>
+            </div>
+            <div class="card" style="background: var(--card-soft);">
+              <h3 id="intro-rlc-title" style="margin-top:0;"></h3>
+              <p id="intro-rlc-desc"></p>
+              <div class="vec-balance-card">
+                <strong style="font-size:0.86rem;">השוואת גדלי המתחים בקנה מידה זהה (<bdi dir="ltr" class="ltr-inline">U = √(UR² + (UL−UC)²)</bdi>):</strong>
+                <div id="intro-rlc-bars" class="vec-balance-rows"></div>
+              </div>
+              <div style="margin-top: 0.9rem;">
+                <button id="btn-rlc-to-lab" class="btn btn-primary btn-sm">🔬 חקור מעגל <bdi dir="ltr" class="ltr-term">RLC</bdi> זה במעבדה</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Station 4: Resonance f0 in Phasors & XL=XC Derivation + Pitfalls -->
+      <div id="intro-ch4" class="intro-chapter" style="display:none;">
+        <div class="card" style="margin-bottom: 1rem;">
+          <div class="card-title">
+            <span>תדר תהודה (<bdi dir="ltr" class="ltr-term">f₀</bdi>): איך הוא מתבטא בדיאגרמת הפאזורים ובחיתוך <bdi dir="ltr" class="ltr-inline">XL = XC</bdi>?</span>
+            <span class="badge badge-resonant">מפגש 14 · תהודה</span>
+          </div>
+          <p class="section-lead">
+            במעגל <bdi dir="ltr" class="ltr-inline">R = 50 Ω, L = 100 mH, C = 1 µF, U = 10 V</bdi>: הזיזו את התדר מתחת, בדיוק על, ומעל <bdi dir="ltr" class="ltr-inline">f₀ ≈ 503.3 Hz</bdi> וראו במקביל איך הפאזורים <bdi dir="ltr" class="ltr-inline">UL</bdi> ו-<bdi dir="ltr" class="ltr-inline">UC</bdi> מתאזנים לגמרי בנקודת החיתוך <bdi dir="ltr" class="ltr-inline">XL = XC</bdi>!
+          </p>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.65rem; margin-bottom:0.85rem;">
+            <label for="intro-res-slider" style="font-weight:700;">תדר המקור <bdi dir="ltr" class="ltr-term">f</bdi>:</label>
+            <input id="intro-res-slider" type="range" min="100" max="1200" step="1" value="503" style="max-width:260px;">
+            <span id="intro-res-f-lbl" class="badge badge-accent" dir="ltr">f = 503.3 Hz</span>
+            <button type="button" class="btn btn-capacitive btn-sm" data-intro-f="250">קיבולי (<bdi dir="ltr" class="ltr-term">250 Hz</bdi>)</button>
+            <button type="button" id="btn-intro-snap-f0" class="btn btn-resonant btn-sm">🎯 תהודה (<bdi dir="ltr" class="ltr-term">503.3 Hz</bdi>)</button>
+            <button type="button" class="btn btn-inductive btn-sm" data-intro-f="900">השראי (<bdi dir="ltr" class="ltr-term">900 Hz</bdi>)</button>
+            <div class="segmented" id="intro-res-chart-mode" style="margin-right:auto;">
+              <button type="button" class="seg-btn active" data-rcmode="reactance_cross">חיתוך <bdi dir="ltr" class="ltr-term">XL=XC</bdi></button>
+              <button type="button" class="seg-btn" data-rcmode="current_z">זרם <bdi dir="ltr" class="ltr-term">I(f), Z(f)</bdi></button>
+            </div>
+          </div>
+
+          <div class="two-col-eq" style="margin-bottom:0.85rem;">
+            <div class="canvas-wrap">
+              <canvas id="intro-res-phasor-canvas" data-height="260"></canvas>
+            </div>
+            <div class="canvas-wrap">
+              <canvas id="intro-res-canvas" data-height="260"></canvas>
+            </div>
+          </div>
+          <div id="intro-res-stats" class="live-readout-strip" style="border-radius:10px; border:1px solid var(--border); margin-bottom:0.85rem;"></div>
+          <div id="intro-res-derivation-box" class="card" style="background: var(--card-soft);"></div>
+          <div style="margin-top:0.8rem;">
+            <button id="btn-res-to-lab" class="btn btn-primary btn-sm">🔬 חקור תהודה זו במעבדה המלאה</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 1rem;">
+          <div class="card-title"><span>שיטת הפתרון הבטוחה בבגרות — 6 שלבים מסודרים</span></div>
+          <div id="intro-steps-host" class="roadmap-steps"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>6 מלכודות בגרות נפוצות ביחידה <bdi dir="ltr" class="ltr-term">U3</bdi> — ואיך להימנע מהן</span></div>
+          <div id="intro-pitfalls-host" class="pitfall-grid"></div>
+        </div>
+      </div>
+
+      <!-- Contextual Next-Step Footer inside Intro -->
+      <div id="intro-next-bar" class="intro-flow-footer">
+        <div class="intro-flow-context">
+          <span class="badge badge-accent" id="intro-flow-badge">סוף תחנה 1 מתוך 4</span>
+          <span id="intro-next-reason" class="intro-next-reason"></span>
+        </div>
+        <div class="intro-flow-actions">
+          <button type="button" id="intro-prev-step" class="btn btn-sm">→ לתחנה הקודמת</button>
+          <button type="button" id="intro-next-step" class="btn btn-primary btn-sm">לתחנה הבאה ←</button>
+          <button type="button" id="intro-go-lab" class="btn btn-sm">🔬 למעבדת החקר</button>
+          <button type="button" id="intro-go-workshop" class="btn btn-sm">✍️ לסדנת התרגול</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TAB 2: INTERACTIVE AC RESEARCH LAB
+         ================================================================ -->
+    <section id="tab-lab" class="tab-panel">
+      <div class="preset-bar">
+        <strong style="font-size:0.9rem; margin-left:0.4rem;">⚡ מעגלי דוגמה ובגרות:</strong>
+        <div id="lab-preset-chips" class="template-chips"></div>
+      </div>
+
+      <div class="lab-layout">
+        <!-- Left Controls Sidebar -->
+        <aside class="controls-stack">
+          <div class="control-group">
+            <div class="module-head">
+              <h3>1. סוג המעגל ואופן הזנה</h3>
+              <span class="mod-badge"><span class="led-dot"></span>CIRCUIT</span>
+            </div>
+            <div class="topo-grid" id="lab-topo-btns">
+              <button type="button" class="topo-btn active" data-topo="RLC">RLC טורי</button>
+              <button type="button" class="topo-btn" data-topo="RL">RL טורי</button>
+              <button type="button" class="topo-btn" data-topo="RC">RC טורי</button>
+              <button type="button" class="topo-btn" data-topo="RC_SWITCH">RC + מפסק S</button>
+            </div>
+
+            <div id="lab-switch-row" style="display:none; margin-top:0.65rem; padding:0.55rem; background:var(--bg); border:1px solid var(--border); border-radius:9px;">
+              <label class="check-label" style="color:var(--fg); font-weight:700;">
+                <input id="lab-switch-closed" type="checkbox">
+                <span>מפסק <bdi dir="ltr" class="ltr-term">S</bdi> במקביל לקבל: <span id="lab-switch-state-lbl" style="color:var(--z-color);">פתוח (קבל פעיל)</span></span>
+              </label>
+            </div>
+
+            <div class="field-row" style="margin-top:0.65rem;">
+              <span class="field-label">אופן הזנת הרכיבים הראקטיביים:</span>
+              <div class="segmented" id="lab-input-mode" style="width:100%; justify-content:space-between;">
+                <button type="button" class="seg-btn active" data-imode="components" style="flex:1;">לפי <bdi dir="ltr" class="ltr-term">L, C</bdi></button>
+                <button type="button" class="seg-btn" data-imode="reactances" style="flex:1;">היגב ישיר <bdi dir="ltr" class="ltr-term">XL, XC</bdi></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="module-head">
+              <h3>2. מקור המתח והתדר (<bdi dir="ltr" class="ltr-term">AC AWG</bdi>)</h3>
+              <span class="mod-badge"><span class="led-dot ur"></span>SOURCE</span>
+            </div>
+
+            <div class="field-row">
+              <label class="field-label" for="lab-src-val"><span>עוצמת מתח המקור</span></label>
+              <div class="input-combo">
+                <input id="lab-src-val" class="input-box ltr-input" type="number" step="0.5" min="0.1" value="10">
+                <select id="lab-src-mode" class="select-box" dir="ltr">
+                  <option value="Ueff" selected>U (אפקטיבי / מד-מתח) [V]</option>
+                  <option value="Umax">Um (משרעת שיא ב-u(t)) [V]</option>
+                  <option value="Upp">Up-p (שיא-לשיא) [V]</option>
+                </select>
+              </div>
+              <div id="lab-source-decoder" class="sine-decoder-box"></div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-label">
+                <span>תדר המקור</span>
+                <div class="segmented" id="lab-freq-mode" style="padding:0.16rem;">
+                  <button type="button" class="seg-btn active" data-fmode="f" style="padding:0.2rem 0.5rem; font-size:0.78rem;">f [Hz]</button>
+                  <button type="button" class="seg-btn" data-fmode="omega" style="padding:0.2rem 0.5rem; font-size:0.78rem;">ω [rad/s]</button>
+                </div>
+              </div>
+              <div class="input-combo">
+                <input id="lab-freq-val" class="input-box ltr-input" type="number" step="1" min="0.1" value="503.29">
+                <select id="lab-freq-unit" class="select-box" dir="ltr">
+                  <option value="Hz" selected>Hz</option>
+                  <option value="kHz">kHz</option>
+                </select>
+              </div>
+              <input id="lab-freq-slider" type="range" min="10" max="2000" step="1" value="503">
+              <div class="freq-mult-row" id="lab-freq-mults">
+                <button type="button" class="chip-btn" data-fmult="0.5">×0.5</button>
+                <button type="button" class="chip-btn" data-fmult="2">×2</button>
+                <button type="button" class="chip-btn" data-fmult="3">×3</button>
+                <button type="button" id="btn-tune-f0" class="chip-btn" style="border-color:var(--ur-color); color:var(--ur-color);">🎯 כוון לתהודה <bdi dir="ltr" class="ltr-term">f₀</bdi></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="module-head">
+              <h3>3. פרמטרי המעגל (<bdi dir="ltr" class="ltr-term">R, L, C</bdi>)</h3>
+              <span class="mod-badge"><span class="led-dot ul"></span>LOAD</span>
+            </div>
+
+            <div class="field-row">
+              <label class="field-label" for="lab-r-val"><span>נגד <bdi dir="ltr" class="ltr-term">R</bdi></span></label>
+              <div class="input-combo">
+                <input id="lab-r-val" class="input-box ltr-input" type="number" step="1" min="1" value="50">
+                <select id="lab-r-unit" class="select-box" dir="ltr">
+                  <option value="Ω" selected>Ω</option>
+                  <option value="kΩ">kΩ</option>
+                </select>
+              </div>
+              <input id="lab-r-slider" type="range" min="1" max="1000" step="1" value="50">
+            </div>
+
+            <div id="lab-comp-inputs">
+              <div class="field-row" id="lab-l-row">
+                <label class="field-label" for="lab-l-val"><span>משרן <bdi dir="ltr" class="ltr-term">L</bdi></span></label>
+                <div class="input-combo">
+                  <input id="lab-l-val" class="input-box ltr-input" type="number" step="1" min="0.1" value="100">
+                  <select id="lab-l-unit" class="select-box" dir="ltr">
+                    <option value="µH">µH</option>
+                    <option value="mH" selected>mH</option>
+                    <option value="H">H</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-row" id="lab-c-row">
+                <label class="field-label" for="lab-c-val"><span>קבל <bdi dir="ltr" class="ltr-term">C</bdi></span></label>
+                <div class="input-combo">
+                  <input id="lab-c-val" class="input-box ltr-input" type="number" step="0.1" min="0.01" value="1">
+                  <select id="lab-c-unit" class="select-box" dir="ltr">
+                    <option value="nF">nF</option>
+                    <option value="µF" selected>µF</option>
+                    <option value="mF">mF</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="lab-react-inputs" style="display:none;">
+              <div class="field-row" id="lab-xl-row">
+                <label class="field-label" for="lab-xl-val"><span>היגב המשרן <bdi dir="ltr" class="ltr-term">XL [Ω]</bdi></span></label>
+                <input id="lab-xl-val" class="input-box ltr-input" type="number" step="1" min="0" value="100">
+              </div>
+              <div class="field-row" id="lab-xc-row">
+                <label class="field-label" for="lab-xc-val"><span>היגב הקבל <bdi dir="ltr" class="ltr-term">XC [Ω]</bdi></span></label>
+                <input id="lab-xc-val" class="input-box ltr-input" type="number" step="1" min="0" value="40">
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Live Stage -->
+        <div class="lab-stage">
+          <!-- KPI Strip -->
+          <div class="card" style="padding: 0.75rem 0.95rem;">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.55rem;">
+              <strong style="font-size:0.96rem;">📊 תצוגת מדידות <bdi dir="ltr" class="ltr-term">RMS</bdi> ואופי המעגל בזמן אמת</strong>
+              <span id="lab-char-badge" class="badge badge-resonant">אוהמי (תהודה)</span>
+            </div>
+            <div id="lab-kpi-strip" class="live-readout-strip" style="padding:0; background:transparent; border:none;"></div>
+          </div>
+
+          <!-- Centerpiece 1: Phasor & Impedance Triangle -->
+          <div class="card" style="padding:0; overflow:hidden;">
+            <div class="scope-toolbar">
+              <strong style="font-size:0.96rem;">📐 דיאגרמת מחוגים (פאזורים) ומשולש עכבות</strong>
+              <div class="segmented" id="lab-phasor-mode">
+                <button type="button" class="seg-btn active" data-pmode="both">שניהם יחד</button>
+                <button type="button" class="seg-btn" data-pmode="phasors">פאזורים בלבד</button>
+                <button type="button" class="seg-btn" data-pmode="triangle">משולש עכבות</button>
+              </div>
+            </div>
+            <div class="canvas-wrap" style="border:none; border-radius:0;">
+              <canvas id="lab-phasor-canvas" data-height="290"></canvas>
+            </div>
+          </div>
+
+          <!-- Centerpiece 2: Meter-Equipped Schematic (A in series, V in parallel) + Vector Balance Bars -->
+          <div class="lab-top-grid">
+            <div class="card" style="padding:0; overflow:hidden;">
+              <div class="scope-toolbar">
+                <strong style="font-size:0.93rem;">🔌 חיבור מד-זרם (<bdi dir="ltr" class="ltr-term">A</bdi>) בטור ומד-מתח (<bdi dir="ltr" class="ltr-term">V</bdi>) במקביל</strong>
+                <div class="segmented" id="lab-voltmeter-btns">
+                  <button type="button" class="seg-btn active" data-vtarget="ALL">כל המדים</button>
+                  <button type="button" class="seg-btn" data-vtarget="U">מקור <bdi dir="ltr" class="ltr-term">U</bdi></button>
+                  <button type="button" class="seg-btn" data-vtarget="UR">נגד <bdi dir="ltr" class="ltr-term">UR</bdi></button>
+                  <button type="button" class="seg-btn" data-vtarget="UL">סליל <bdi dir="ltr" class="ltr-term">UL</bdi></button>
+                  <button type="button" class="seg-btn" data-vtarget="UC">קבל <bdi dir="ltr" class="ltr-term">UC</bdi></button>
+                </div>
+              </div>
+              <div class="canvas-wrap" style="border:none; border-radius:0;">
+                <canvas id="lab-schematic-canvas" data-height="260"></canvas>
+              </div>
+              <div id="lab-meter-explain" class="meter-explain-strip"></div>
+            </div>
+
+            <div class="card" style="padding: 0.85rem 1rem;">
+              <div class="module-head" style="margin-bottom:0.45rem;">
+                <h3>⚖️ מאזן המתחים הווקטורי (<bdi dir="ltr" class="ltr-inline">U = √(UR² + (UL − UC)²)</bdi>)</h3>
+                <span class="mod-badge"><span class="led-dot warn"></span>KVL AC</span>
+              </div>
+              <p style="font-size:0.83rem; color:var(--muted); margin:0 0 0.55rem 0;">
+                כל העמודות מוצגות באותו קנה מידה: ערכים שווים (למשל <bdi dir="ltr" class="ltr-inline">UL = UC</bdi> בתהודה) מוצגים באורך זהה בדיוק, ו-<bdi dir="ltr" class="ltr-inline">UL, UC</bdi> אף יכולים לעלות מעל מתח המקור!
+              </p>
+              <div id="lab-vec-balance-rows" class="vec-balance-rows"></div>
+              <div id="lab-vec-summary" class="math-block" dir="ltr" style="margin-top:0.65rem; font-size:0.82rem; padding:0.45rem 0.65rem;"></div>
+            </div>
+          </div>
+
+          <!-- Centerpiece 3: Resonance & Reactance Equality (XL = XC) -->
+          <div class="card" style="padding:0; overflow:hidden;">
+            <div class="scope-toolbar">
+              <strong style="font-size:0.95rem;">🎯 תדר תהודה ושוויון ההיגבים (<bdi dir="ltr" class="ltr-inline">XL = XC</bdi>) — לחצו או גררו על הגרף לשינוי <bdi dir="ltr" class="ltr-term">f</bdi></strong>
+              <div class="segmented" id="lab-freq-chart-mode">
+                <button type="button" class="seg-btn active" data-fcmode="reactance_cross">חיתוך ההיגבים <bdi dir="ltr" class="ltr-term">XL=XC</bdi></button>
+                <button type="button" class="seg-btn" data-fcmode="current_z">עקומת <bdi dir="ltr" class="ltr-term">I(f), Z(f)</bdi></button>
+              </div>
+            </div>
+            <div class="canvas-wrap" style="border:none; border-radius:0;">
+              <canvas id="lab-freq-canvas" data-height="245"></canvas>
+            </div>
+            <div id="lab-res-equality-box" class="res-derivation-box"></div>
+          </div>
+
+          <!-- Step-by-Step Formula Derivation Inspector -->
+          <div class="card">
+            <div class="card-title">
+              <span>🧮 פתרון מלא צעד-אחר-צעד בסגנון בגרות לערכים הנוכחיים</span>
+              <span class="badge badge-accent">הצבה חיה</span>
+            </div>
+            <div id="lab-derivation-steps" class="step-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TAB 3: EXERCISE WORKSHOP & CUSTOM VALIDATOR
+         ================================================================ -->
+    <section id="tab-workshop" class="tab-panel">
+      <div class="workshop-header">
+        <div class="segmented" id="workshop-subtabs">
+          <button class="seg-btn active" data-sub="curated">📖 תרגילי יחידה ובגרות (14)</button>
+          <button class="seg-btn" data-sub="mcdril">🎯 אימון אמריקאי (Ueff, מדים ותהודה)</button>
+          <button class="seg-btn" data-sub="random">🎲 מחולל תרגול אינסופי</button>
+          <button class="seg-btn" data-sub="custom">🛠️ בודק תרגיל מהמחברת</button>
+        </div>
+        <div id="workshop-progress-badge" class="badge badge-done">פתרת 0 מתוך 14 תרגילים</div>
+      </div>
+
+      <div class="workshop-layout">
+        <div class="workshop-main-col">
+          <!-- Sub-tab 1: Curated 14 Exercises -->
+          <div id="sub-curated" class="workshop-subpanel">
+            <div class="filter-pills" id="ex-filter-pills">
+              <button class="chapter-pill active" data-filter="all">הכול (14)</button>
+              <button class="chapter-pill" data-filter="m12">מפגש 12: <bdi dir="ltr" class="ltr-term">RL</bdi> טורי</button>
+              <button class="chapter-pill" data-filter="m13">מפגש 13: <bdi dir="ltr" class="ltr-term">RC, RLC</bdi> ומדים</button>
+              <button class="chapter-pill" data-filter="m14">מפגש 14: תהודה (<bdi dir="ltr" class="ltr-term">XL=XC</bdi>) ובגרות</button>
+            </div>
+            <div id="curated-ex-list" class="exercise-list"></div>
+          </div>
+
+          <!-- Sub-tab 2: MC Drill -->
+          <div id="sub-mcdril" class="workshop-subpanel" style="display:none;">
+            <div class="card" style="margin-bottom: 1rem;">
+              <div class="module-head">
+                <h3 style="margin:0;">אימון אמריקאי: <bdi dir="ltr" class="ltr-inline">u(t) ↔ Ueff</bdi>, חיבור מדים, תהודה (<bdi dir="ltr" class="ltr-inline">XL=XC</bdi>) ויחידות</h3>
+                <span class="mod-badge"><span class="led-dot"></span>MC TRAINER</span>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; justify-content:space-between;">
+                <div style="display:flex; flex-wrap:wrap; gap:0.65rem; align-items:center;">
+                  <div class="segmented" id="mc-drill-mode">
+                    <button class="seg-btn active" data-mcmode="ueff_meters">🔌 <bdi dir="ltr" class="ltr-term">Ueff, u(t)</bdi> ומדים</button>
+                    <button class="seg-btn" data-mcmode="resonance_eq">🎯 תהודה ופאזורים (<bdi dir="ltr" class="ltr-term">XL=XC</bdi>)</button>
+                    <button class="seg-btn" data-mcmode="reactance">⚡ יחידות ו-<bdi dir="ltr" class="ltr-term">XL / XC</bdi></button>
+                    <button class="seg-btn" data-mcmode="stages">🧭 פירוק מעגל ל-4 שלבים</button>
+                  </div>
+                  <div id="mc-stages-topo-wrap" style="display:none; align-items:center; gap:0.45rem;">
+                    <label for="mc-stages-topo" style="font-size:0.86rem; color:var(--muted);">מעגל:</label>
+                    <select id="mc-stages-topo" class="select-box" style="width:auto; padding:0.35rem 0.65rem;">
+                      <option value="MIXED">מעורב אקראי (RL / RC / RLC)</option>
+                      <option value="RL">RL בלבד</option>
+                      <option value="RC">RC בלבד</option>
+                      <option value="RLC">RLC בלבד</option>
+                    </select>
+                  </div>
+                  <button id="btn-next-mc" class="btn btn-primary btn-sm">🎲 שאלה חדשה</button>
+                </div>
+                <span id="mc-score-badge" class="badge badge-accent">נכונות: 0 / 0 · רצף: 0</span>
+              </div>
+            </div>
+            <div id="mc-drill-host"></div>
+          </div>
+
+          <!-- Sub-tab 3: Random Generator -->
+          <div id="sub-random" class="workshop-subpanel" style="display:none;">
+            <div class="card" style="margin-bottom: 1rem;">
+              <div class="card-title"><span>מחולל תרגילים אינסופי עם שלשות פיתגורס ובדיקת מלכודות</span></div>
+              <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end;">
+                <div class="field-row" style="margin:0; min-width:190px;">
+                  <label class="field-label" for="rand-topo">סוג מעגל</label>
+                  <select id="rand-topo" class="select-box">
+                    <option value="MIXED">מעורב אקראי (RL / RC / RLC)</option>
+                    <option value="RL">RL טורי</option>
+                    <option value="RC">RC טורי</option>
+                    <option value="RLC">RLC טורי</option>
+                  </select>
+                </div>
+                <div class="field-row" style="margin:0; min-width:210px;">
+                  <label class="field-label" for="rand-diff">רמת נתונים</label>
+                  <select id="rand-diff" class="select-box">
+                    <option value="medium" selected>תרגול — נתוני R, XL, XC ישירים</option>
+                    <option value="bagrut">בגרות — נתוני R, L, C והמרת יחידות</option>
+                  </select>
+                </div>
+                <button id="btn-gen-random" class="btn btn-primary">🎲 צור תרגיל חדש</button>
+              </div>
+            </div>
+            <div id="random-ex-container"></div>
+          </div>
+
+          <!-- Sub-tab 4: Custom Homework Verifier -->
+          <div id="sub-custom" class="workshop-subpanel" style="display:none;">
+            <div class="card">
+              <div class="card-title"><span>פתרון ואימות תרגיל מהמחברת או מדף העבודה</span></div>
+              <p class="section-lead">הזינו את נתוני המעגל של התרגיל שלכם, בחרו מה ברצונכם לבדוק, והשוו מול התוצאה שקיבלתם במחברת.</p>
+
+              <div class="two-col-eq">
+                <div class="card" style="background:var(--card-soft);">
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(145px, 1fr)); gap:0.65rem;">
+                    <div class="field-row">
+                      <label class="field-label" for="cust-topo">סוג מעגל</label>
+                      <select id="cust-topo" class="select-box">
+                        <option value="RLC" selected>RLC טורי</option>
+                        <option value="RL">RL טורי</option>
+                        <option value="RC">RC טורי</option>
+                        <option value="RC_SWITCH">RC + מפסק S</option>
+                      </select>
+                    </div>
+                    <div class="field-row" id="cust-switch-wrap" style="display:none;">
+                      <label class="field-label" for="cust-switch">מצב מפסק S</label>
+                      <select id="cust-switch" class="select-box">
+                        <option value="open" selected>פתוח (קבל פעיל)</option>
+                        <option value="closed">סגור (קבל מקוצר)</option>
+                      </select>
+                    </div>
+                    <div class="field-row">
+                      <label class="field-label" for="cust-ueff"><span>מתח אפקטיבי <bdi dir="ltr" class="ltr-term">U [V]</bdi></span></label>
+                      <input id="cust-ueff" class="input-box ltr-input" type="number" step="0.5" value="25">
+                    </div>
+                    <div class="field-row">
+                      <label class="field-label" for="cust-freq"><span>תדר <bdi dir="ltr" class="ltr-term">f</bdi></span></label>
+                      <div class="input-combo">
+                        <input id="cust-freq" class="input-box ltr-input" type="number" step="1" value="1000">
+                        <select id="cust-freq-unit" class="select-box" dir="ltr">
+                          <option value="Hz" selected>Hz</option>
+                          <option value="kHz">kHz</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="field-row">
+                      <label class="field-label" for="cust-r"><span>נגד <bdi dir="ltr" class="ltr-term">R</bdi></span></label>
+                      <div class="input-combo">
+                        <input id="cust-r" class="input-box ltr-input" type="number" step="1" value="50">
+                        <select id="cust-r-unit" class="select-box" dir="ltr">
+                          <option value="Ω" selected>Ω</option>
+                          <option value="kΩ">kΩ</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="field-row" id="cust-l-wrap">
+                      <label class="field-label" for="cust-l"><span>משרן <bdi dir="ltr" class="ltr-term">L</bdi></span></label>
+                      <div class="input-combo">
+                        <input id="cust-l" class="input-box ltr-input" type="number" step="1" value="10">
+                        <select id="cust-l-unit" class="select-box" dir="ltr">
+                          <option value="µH">µH</option>
+                          <option value="mH" selected>mH</option>
+                          <option value="H">H</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="field-row" id="cust-c-wrap">
+                      <label class="field-label" for="cust-c"><span>קבל <bdi dir="ltr" class="ltr-term">C</bdi></span></label>
+                      <div class="input-combo">
+                        <input id="cust-c" class="input-box ltr-input" type="number" step="0.1" value="2">
+                        <select id="cust-c-unit" class="select-box" dir="ltr">
+                          <option value="nF">nF</option>
+                          <option value="µF" selected>µF</option>
+                          <option value="mF">mF</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr style="border:none; border-top:1px solid var(--border); margin:0.85rem 0;">
+
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.65rem;">
+                    <div class="field-row">
+                      <label class="field-label" for="cust-qtype">גודל לבדיקה:</label>
+                      <select id="cust-qtype" class="select-box">
+                        <option value="Z">עכבה כוללת Z [Ω]</option>
+                        <option value="I_mA">זרם אפקטיבי I [mA]</option>
+                        <option value="XL">היגב משרן XL [Ω]</option>
+                        <option value="XC">היגב קבל XC [Ω]</option>
+                        <option value="phi">זווית מופע φ [°]</option>
+                        <option value="f0">תדר תהודה f₀ [Hz]</option>
+                      </select>
+                    </div>
+                    <div class="field-row">
+                      <label class="field-label" for="cust-student-ans">התשובה שלך (לא חובה):</label>
+                      <input id="cust-student-ans" class="input-box ltr-input" type="text" inputmode="decimal" placeholder="-36.87">
+                    </div>
+                  </div>
+
+                  <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.8rem;">
+                    <button id="btn-cust-verify" class="btn btn-primary">✅ בדוק ופתור במלואו</button>
+                    <button id="btn-cust-to-lab" class="btn">🔬 טען למעבדה המלאה</button>
+                  </div>
+                  <div id="cust-feedback" class="feedback-msg"></div>
+                </div>
+
+                <div>
+                  <div class="canvas-wrap" style="margin-bottom:0.8rem;">
+                    <canvas id="cust-phasor-canvas" data-height="250"></canvas>
+                  </div>
+                  <div id="cust-steps" class="step-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside id="workshop-unit-sidebar" class="unit-sidebar" aria-label="טבלת קידומות ושלשות פיתגורס"></aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================================================
+       SLIDE-OVER FORMULA SHEET & AUXILIARY CALCULATORS DRAWER
+       ================================================================ -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+  <aside id="formula-drawer" class="formula-drawer" aria-label="דף נוסחאות ומחשבוני עזר">
+    <div class="drawer-head">
+      <div>
+        <h2 style="margin:0; font-size:1.1rem;">📄 דף נוסחאות זרם חילופין ותהודה (יחידה <bdi dir="ltr" class="ltr-term">U3</bdi>)</h2>
+        <p style="margin:0; font-size:0.82rem; color:var(--muted);">מותאם לדף העזר הרשמי לבגרות · שאלון <bdi dir="ltr" class="ltr-term">815381</bdi></p>
+      </div>
+      <button id="btn-close-formulas" class="btn btn-sm">✕ סגור</button>
+    </div>
+    <div class="drawer-body">
+      <div id="formula-tables-host"></div>
+
+      <div class="card" style="background:var(--card-soft);">
+        <h3 style="margin-top:0; font-size:0.98rem;">מחשבוני עזר מהירים</h3>
+        <div class="aux-calc-grid">
+          <div class="card">
+            <strong style="display:block; margin-bottom:0.45rem;">1. היגבים ותדר תהודה (<bdi dir="ltr" class="ltr-term">XL, XC, f₀</bdi>)</strong>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <input id="aux-f" class="input-box ltr-input" type="number" step="10" value="1">
+              <select id="aux-fu" class="select-box" dir="ltr"><option value="Hz">Hz</option><option value="kHz" selected>kHz</option></select>
+            </div>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <input id="aux-l" class="input-box ltr-input" type="number" step="1" value="10">
+              <select id="aux-lu" class="select-box" dir="ltr"><option value="µH">µH</option><option value="mH" selected>mH</option><option value="H">H</option></select>
+            </div>
+            <div class="input-combo" style="margin-bottom:0.45rem;">
+              <input id="aux-c" class="input-box ltr-input" type="number" step="0.1" value="2">
+              <select id="aux-cu" class="select-box" dir="ltr"><option value="nF">nF</option><option value="µF" selected>µF</option><option value="mF">mF</option></select>
+            </div>
+            <div id="aux-react-res" class="math-block" dir="ltr"></div>
+          </div>
+
+          <div class="card">
+            <strong style="display:block; margin-bottom:0.45rem;">2. משולש עכבות (<bdi dir="ltr" class="ltr-term">R, XL, XC → Z, φ</bdi>)</strong>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <input id="aux-r" class="input-box ltr-input" type="number" step="1" value="60">
+              <select id="aux-ru" class="select-box" dir="ltr"><option value="Ω" selected>Ω</option><option value="kΩ">kΩ</option></select>
+            </div>
+            <div class="input-combo" style="margin-bottom:0.35rem;">
+              <span class="ltr-inline" dir="ltr">XL</span>
+              <input id="aux-xl" class="input-box ltr-input" type="number" step="1" value="80">
+              <span class="ltr-inline" dir="ltr">Ω</span>
+            </div>
+            <div class="input-combo" style="margin-bottom:0.45rem;">
+              <span class="ltr-inline" dir="ltr">XC</span>
+              <input id="aux-xc" class="input-box ltr-input" type="number" step="1" value="0">
+              <span class="ltr-inline" dir="ltr">Ω</span>
+            </div>
+            <div id="aux-z-res" class="math-block" dir="ltr"></div>
+          </div>
+
+          <div class="card">
+            <strong style="display:block; margin-bottom:0.45rem;">3. המרת סינוס (<bdi dir="ltr" class="ltr-term">U ↔ Um ↔ Up-p</bdi>)</strong>
+            <div class="input-combo" style="margin-bottom:0.45rem;">
+              <input id="aux-u" class="input-box ltr-input" type="number" step="0.5" value="220">
+              <select id="aux-umode" class="select-box" dir="ltr">
+                <option value="Ueff" selected>U (RMS)</option>
+                <option value="Umax">Um (Peak)</option>
+                <option value="Upp">Up-p</option>
+              </select>
+            </div>
+            <div id="aux-sine-res" class="math-block" dir="ltr"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</body>
+</html>
