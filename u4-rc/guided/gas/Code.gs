@@ -1,9 +1,11 @@
 /**
  * @OnlyCurrentDoc
  *
- * Guided LP/HP activity - receives the students' work from the site and writes it to this Google Sheet.
+ * Guided activities (LP/HP, AC) - receives the students' work from the site and writes it to this Google Sheet.
+ * One script and one spreadsheet serve every guided activity; each activity has its own four sheets.
  *
- * Sheets (created by setup, right to left):
+ * Sheets of the LP/HP activity (created by setup, right to left). The AC activity has the same four,
+ * with " - AC" after the name:
  *   הגשות        - one row per student attempt (name, phone), updated while the student works; "מצב" turns to "הוגש" at the end
  *   צעדים        - one row per finished step: the answers typed, wrong attempts, hints opened, seconds, points
  *   ניתוח שלבים  - rebuilt: per step, how the class did (first-try success, hints, time). Hardest first inside a station
@@ -23,6 +25,9 @@ const MAX_EVENTS = 80, MAX_TEXT = 300;
 const TIME_ZONE = 'Asia/Jerusalem';
 const STATION_COLS = 5;             // the site has five stations; their titles arrive with the data
 
+// Every activity the site may send, and what is added to its sheet names. Anything else is refused.
+const APPS = { 'u4-lp-hp-guided': '', 'u3-ac-guided': ' - AC' };
+
 const HEAD = {
   'הגשות': ['עודכן', 'התחלה', 'שם', 'טלפון', 'ניסיון', 'מצב', 'ציון', 'מתוך', 'אחוז', 'שלבים שהושלמו', 'מתוך שלבים', 'רמזים', 'תשובות שגויות',
     'פתרונות שנחשפו', 'משך (דקות)', 'תחנה 1', 'תחנה 2', 'תחנה 3', 'תחנה 4', 'תחנה 5', 'לחזק', 'נתונים אישיים', 'מכשיר', 'מזהה ניסיון'],
@@ -41,22 +46,27 @@ const KIND = { num: 'חישוב', mc: 'רב-ברירה', sim: 'הפעלת סימ
 function setup() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   if (ss.setSpreadsheetTimeZone) ss.setSpreadsheetTimeZone(TIME_ZONE);   // times in the sheet read as local time
-  Object.keys(HEAD).forEach(function (name) { sheet_(ss, name); });
+  Object.keys(APPS).forEach(function (app) {
+    Object.keys(HEAD).forEach(function (name) { sheet_(ss, name, APPS[app]); });
+  });
 }
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('פעילות מודרכת').addItem('רענון ניתוח', 'refresh').addToUi();
 }
 
-/** Menu: rebuild the two analysis sheets from the raw step rows. */
+/** Menu: rebuild the analysis sheets of every activity from its raw step rows. */
 function refresh() {
-  rebuild_(SpreadsheetApp.getActiveSpreadsheet());
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  Object.keys(APPS).forEach(function (app) { rebuild_(ss, APPS[app]); });
 }
 
-function sheet_(ss, name) {
-  let sh = ss.getSheetByName(name);
+/** The sheet `name` of one activity (`suffix` is '' for LP/HP); created with its header row when missing. */
+function sheet_(ss, name, suffix) {
+  const full = name + (suffix || '');
+  let sh = ss.getSheetByName(full);
   if (!sh) {
-    sh = ss.insertSheet(name);
+    sh = ss.insertSheet(full);
     sh.setRightToLeft(true);
   }
   if (sh.getLastRow() === 0) {
@@ -86,7 +96,7 @@ function num_(v) {
 }
 
 function doGet() {
-  return json_({ ok: true, app: 'u4-lp-hp-guided' });
+  return json_({ ok: true, app: 'guided', activities: Object.keys(APPS) });
 }
 
 function doPost(e) {
@@ -103,6 +113,9 @@ function doPost(e) {
     const h = p.head || {};
     const events = Array.isArray(p.events) ? p.events : [];
     if (p.type !== 'batch' || !h.attemptId || !h.student || events.length > MAX_EVENTS) return json_({ ok: false, error: 'bad payload' });
+    const app = p.app === undefined ? 'u4-lp-hp-guided' : String(p.app);
+    if (!Object.prototype.hasOwnProperty.call(APPS, app)) return json_({ ok: false, error: 'unknown activity' });
+    const sfx = APPS[app];
 
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const id = text_(h.attemptId), name = text_(h.student);
@@ -110,7 +123,7 @@ function doPost(e) {
     (Array.isArray(h.stationTitles) ? h.stationTitles : []).forEach(function (t) { titles[String(t[0])] = text_(t[1]); });
 
     // 1. step rows. The site re-sends until it gets an answer, so a step may arrive twice: keep one copy.
-    const steps = sheet_(ss, 'צעדים');
+    const steps = sheet_(ss, 'צעדים', sfx);
     let added = 0;
     if (events.length) {
       const n = steps.getLastRow() - 1;
@@ -135,7 +148,7 @@ function doPost(e) {
     const s = p.summary;
     let finished = false;
     if (s) {
-      const sub = sheet_(ss, 'הגשות');
+      const sub = sheet_(ss, 'הגשות', sfx);
       const stationIds = (Array.isArray(h.stationTitles) ? h.stationTitles : []).map(function (t) { return String(t[0]); });
       const st = [];
       for (let i = 0; i < STATION_COLS; i++) {
@@ -165,7 +178,7 @@ function doPost(e) {
     }
 
     // 3. the analysis sheets are rebuilt only when a student submits: cheap for everyone else
-    if (finished) rebuild_(ss);
+    if (finished) rebuild_(ss, sfx);
     return json_({ ok: true, added: added });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
@@ -179,9 +192,9 @@ function colour_(sh, rowNo, width, finished, pct) {
   sh.getRange(rowNo, 1, 1, width).setBackground(c);
 }
 
-/** Rebuilds ניתוח שלבים and מיומנויות from צעדים. One pass over the data; fine for thousands of rows. */
-function rebuild_(ss) {
-  const src = sheet_(ss, 'צעדים');
+/** Rebuilds ניתוח שלבים and מיומנויות of one activity from its צעדים. One pass over the data; fine for thousands of rows. */
+function rebuild_(ss, suffix) {
+  const src = sheet_(ss, 'צעדים', suffix);
   const n = src.getLastRow() - 1;
   const data = n > 0 ? src.getRange(2, 1, n, HEAD['צעדים'].length).getValues() : [];
   // columns of צעדים: 0 time, 1 name, 2 station, 3 step, 4 skill, 5 kind, 6 answers, 7 expected, 8 wrong, 9 hints, 10 revealed, 11 points, 12 of, 13 sec, 14 attempt, 15 step id
@@ -209,7 +222,7 @@ function rebuild_(ss) {
       scored.length ? Math.round(100 * sum(scored.map(function (r) { return r[11]; })) / sum(scored.map(function (r) { return r[12]; }))) : '',
       median(rows.map(function (r) { return r[13]; })), key];
   });
-  write_(sheet_(ss, 'ניתוח שלבים'), stepRows, function (r) {
+  write_(sheet_(ss, 'ניתוח שלבים', suffix), stepRows, function (r) {
     return r[8] === '' ? null : r[8] < WEAK_BELOW ? '#fbe9e7' : r[8] < GOOD_FROM ? '#fdf2d8' : '#e3f4ea';
   });
 
@@ -226,7 +239,7 @@ function rebuild_(ss) {
     const g = groups[key], pct = Math.round(100 * g[0] / g[1]);
     return key.split('\u0001').concat([g[0], g[1], pct, pct < WEAK_BELOW ? 'לחזק' : pct < GOOD_FROM ? 'כמעט' : 'מצוין']);
   }).sort(function (x, y) { return x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[4] - y[4]; });
-  write_(sheet_(ss, 'מיומנויות'), skills, function (r) {
+  write_(sheet_(ss, 'מיומנויות', suffix), skills, function (r) {
     return r[5] === 'לחזק' ? '#fbe9e7' : r[5] === 'כמעט' ? '#fdf2d8' : '#e3f4ea';
   });
 }

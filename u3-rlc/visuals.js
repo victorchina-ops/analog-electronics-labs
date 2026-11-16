@@ -475,7 +475,9 @@
       drawParallelVoltmeterV(leftX, midY, +1, p.u, `U = ${E.fmtNum(sol.Ueff, 2)} V`);
     }
 
-    // Top Header Bar
+    // Top Header Bar (opts.noHeader: the guided activity has its own read-outs, and the
+    // header names the character of the circuit, which is one of its questions)
+    if (opts.noHeader) return;
     ctx.fillStyle = p.bg;
     ctx.fillRect(0, 0, w, 28);
     drawRtlText(ctx, `סכימת מדים: A בטור · V במקביל (${sol.characterShort})`, w - 12, 19, {
