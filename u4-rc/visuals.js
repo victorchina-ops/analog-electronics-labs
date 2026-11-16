@@ -247,8 +247,10 @@
 
   function drawSingleSchematic(ctx, ox, oy, w, h, st, pal, compact) {
     const isLP = st.network === 'LP';
-    const xLeft = ox + (compact ? 42 : 70);
-    const xRight = ox + w - (compact ? 42 : 70);
+    // st.sidePad: room for the "Vi = ..V" / "Vo = ..V" labels in a narrow panel (the guided activity). Default unchanged.
+    const sidePad = Number.isFinite(st.sidePad) ? st.sidePad : (compact ? 42 : 70);
+    const xLeft = ox + sidePad;
+    const xRight = ox + w - sidePad;
     const yTop = oy + (compact ? 38 : 54);
     const yBot = oy + h - (compact ? 26 : 38);
     const xSeries = xLeft + (xRight - xLeft) * 0.44;
@@ -543,9 +545,13 @@
     if (viMin <= 0 && viMax >= 0) viKeyLevels.push(0);
     distinctVi.forEach((v) => viKeyLevels.push(v));
 
+    // options.hideKeyLevels: the guided activity asks students to compute the output peaks,
+    // so it draws the Vo axis with regular ticks only (no exact peak labels). Default: labels shown.
     const voKeyLevels = [];
-    if (Number.isFinite(sigVoMax) && Math.abs(sigVoMax) >= 1e-3) voKeyLevels.push(sigVoMax);
-    if (Number.isFinite(sigVoMin) && Math.abs(sigVoMin) >= 1e-3) voKeyLevels.push(sigVoMin);
+    if (!options.hideKeyLevels) {
+      if (Number.isFinite(sigVoMax) && Math.abs(sigVoMax) >= 1e-3) voKeyLevels.push(sigVoMax);
+      if (Number.isFinite(sigVoMin) && Math.abs(sigVoMin) >= 1e-3) voKeyLevels.push(sigVoMin);
+    }
     if (voMin <= 0 && voMax >= 0) voKeyLevels.push(0);
     pinTargets.forEach((v) => voKeyLevels.push(v));
 
