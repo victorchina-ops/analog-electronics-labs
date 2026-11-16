@@ -20,6 +20,7 @@
  */
 const WEAK_BELOW = 60, GOOD_FROM = 85;   // percent: below 60 "לחזק", from 85 "מצוין", between "כמעט"
 const MAX_EVENTS = 80, MAX_TEXT = 300;
+const TIME_ZONE = 'Asia/Jerusalem';
 const STATION_COLS = 5;             // the site has five stations; their titles arrive with the data
 
 const HEAD = {
@@ -36,9 +37,10 @@ HEAD['הגשות'].forEach(function (h, i) { SUB[h] = i + 1; });
 const STEP_ATT = HEAD['צעדים'].indexOf('מזהה ניסיון'), STEP_ID = HEAD['צעדים'].indexOf('מזהה שלב');
 const KIND = { num: 'חישוב', mc: 'רב-ברירה', sim: 'הפעלת סימולטור', info: 'קריאה' };
 
-/** Run once from the editor: creates the four sheets. Safe to run again. */
+/** Run once from the editor: creates the four sheets and sets the sheet's clock to Israel time. Safe to run again. */
 function setup() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (ss.setSpreadsheetTimeZone) ss.setSpreadsheetTimeZone(TIME_ZONE);   // times in the sheet read as local time
   Object.keys(HEAD).forEach(function (name) { sheet_(ss, name); });
 }
 
